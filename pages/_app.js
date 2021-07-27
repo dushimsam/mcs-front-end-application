@@ -21,6 +21,13 @@ function MyApp({ Component, pageProps }) {
           href="https://fonts.googleapis.com/css2?family=Numans&display=swap"
           rel="stylesheet"
         />
+
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          referrerpolicy="no-referrer"
+        />
+
         <script
           src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
           crossorigin="anonymous"
