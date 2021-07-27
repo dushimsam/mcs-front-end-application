@@ -1,4 +1,5 @@
 import About from "../components/Home/About";
+import Events from "../components/Home/Events";
 import HeroSection from "../components/Home/HeroSection";
 import Team from "../components/Home/Team";
 import Testimonials from "../components/Home/Testimonials";
@@ -14,9 +15,7 @@ export default function Home() {
       <About />
       <Testimonials />
       <Team />
-      <div className="mt-5 container pt-5 pb-5">
-        <h3 className="numan text-center">Latest School Events</h3>
-      </div>
+      <Events />
     </div>
   );
 }
