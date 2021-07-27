@@ -10,6 +10,10 @@ body {
   font-family: "Numans", sans-serif;
 }
 
+.mt-10 {
+  margin-top: 8rem;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -45,4 +49,17 @@ a {
 }
 .offer-sm {
   font-size: 15px;
+}
+
+.bg-gray {
+  background-color: #f9f9f9;
+}
+
+@media only screen and (min-width: 768px) {
+  .about-us-content {
+    width: 45%;
+  }
+  .about-us-img {
+    width: 45%;
+  }
 }
