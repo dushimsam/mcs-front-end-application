@@ -1,0 +1,55 @@
+#main {
+  margin: 50px 0;
+}
+
+#main #faq .card {
+  margin-bottom: 30px;
+  border: 0;
+}
+
+#main #faq .card .card-header {
+  border: 0;
+  -webkit-box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
+  box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
+  border-radius: 2px;
+  padding: 0;
+}
+
+#main #faq .card .card-header .btn-header-link {
+  display: block;
+  text-align: left;
+  color: #188b0d;
+  background: #ffffff;
+  padding: 20px;
+}
+
+#main #faq .card .card-header .btn-header-link:after {
+  content: "\f107";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  float: right;
+}
+
+#main #faq .card .card-header .btn-header-link.collapsed {
+  background: #ffffff;
+  color: #4e4949;
+}
+
+#main #faq .card .card-header .btn-header-link.collapsed:after {
+  content: "\f106";
+}
+
+#main #faq .card .collapsing {
+  background: #ffffff;
+  line-height: 30px;
+}
+
+#main #faq .card .collapse {
+  border: 0;
+}
+
+#main #faq .card .collapse.show {
+  background: #fff;
+  line-height: 30px;
+  color: #222;
+}

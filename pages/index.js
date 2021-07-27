@@ -1,5 +1,6 @@
 import About from "../components/Home/About";
 import Events from "../components/Home/Events";
+import FAQ from "../components/Home/FAQ";
 import HeroSection from "../components/Home/HeroSection";
 import Team from "../components/Home/Team";
 import Testimonials from "../components/Home/Testimonials";
@@ -16,6 +17,7 @@ export default function Home() {
       <Testimonials />
       <Team />
       <Events />
+      <FAQ />
     </div>
   );
 }
