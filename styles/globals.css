@@ -62,4 +62,7 @@ a {
   .about-us-img {
     width: 45%;
   }
+  .testimonial-card {
+    width: 40%;
+  }
 }
