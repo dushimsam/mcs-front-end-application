@@ -6,6 +6,9 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
   font-family: "Nunito", sans-serif;
 }
+.numan {
+  font-family: "Numans", sans-serif;
+}
 
 a {
   color: inherit;
@@ -35,3 +38,11 @@ a {
 }
 
 /* End of Navbar */
+
+.offer-md {
+  font-weight: 600;
+  font-size: 17px;
+}
+.offer-sm {
+  font-size: 15px;
+}

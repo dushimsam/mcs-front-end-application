@@ -16,6 +16,11 @@ function MyApp({ Component, pageProps }) {
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           crossorigin="anonymous"
         />
+
+        <link
+          href="https://fonts.googleapis.com/css2?family=Numans&display=swap"
+          rel="stylesheet"
+        />
         <script
           src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
           crossorigin="anonymous"
