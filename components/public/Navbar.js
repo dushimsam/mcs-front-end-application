@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light">
+    <nav className="navbar navbar-expand-lg navbar-light" id="navbar">
       <Link href="/">
         <a className="navbar-brand">
           <Image src="/images/logo.svg" alt="logo" width="80" height="50" />
