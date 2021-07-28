@@ -8,7 +8,7 @@ export default function Footer() {
             <div className="dk-footer-box-info">
               <a href="index.html" className="footer-logo">
                 <img
-                  src="https://cdn.pixabay.com/photo/2016/11/07/13/04/yoga-1805784_960_720.png"
+                  src="/images/logo.svg"
                   alt="footer_logo"
                   className="img-fluid"
                 />
@@ -21,28 +21,30 @@ export default function Footer() {
                 <h3>Follow us</h3>
                 <ul>
                   <li>
+                    <Link href="#">
+                      <a>
+                        <i className="fab fa-facebook"></i>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
                     <a href="#">
-                      <i className="fa fa-facebook"></i>
+                      <i className="fab fa-twitter"></i>
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i className="fa fa-twitter"></i>
+                      <i className="fab fa-whatsapp"></i>
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i className="fa fa-google-plus"></i>
+                      <i className="fab fa-linkedin"></i>
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i className="fa fa-linkedin"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i className="fa fa-instagram"></i>
+                      <i className="fab fa-instagram"></i>
                     </a>
                   </li>
                 </ul>
@@ -52,7 +54,7 @@ export default function Footer() {
             {/* <!-- End Footer info --> */}
             <div className="footer-awarad">
               <img src="images/icon/best.png" alt="" />
-              <p>Best Design Company 2019</p>
+              <p>Best Primary School 2020</p>
             </div>
           </div>
           {/* <!-- End Col --> */}
@@ -65,7 +67,7 @@ export default function Footer() {
                   </div>
                   {/* <!-- End contact Icon --> */}
                   <div className="contact-info">
-                    <h3>Jaipur India</h3>
+                    <h3>Kigali, Rwanda</h3>
                     <p>5353 Road Avenue</p>
                   </div>
                   {/* <!-- End Contact Info --> */}
@@ -83,7 +85,7 @@ export default function Footer() {
                   </div>
                   {/* <!-- End contact Icon --> */}
                   <div className="contact-info">
-                    <h3>95 711 9 5353</h3>
+                    <h3>+2507839233</h3>
                     <p>Give us a call</p>
                   </div>
                   {/* <!-- End Contact Info --> */}
@@ -104,22 +106,20 @@ export default function Footer() {
                     <li>
                       <a href="#">About us</a>
                     </li>
-                    <li>
-                      <a href="#">Services</a>
-                    </li>
+
                     <li>
                       <a href="#">Projects</a>
                     </li>
                     <li>
                       <a href="#">Our Team</a>
                     </li>
-                  </ul>
-                  <ul>
                     <li>
                       <a href="#">Contact us</a>
                     </li>
+                  </ul>
+                  <ul>
                     <li>
-                      <a href="#">Blog</a>
+                      <a href="#">Events</a>
                     </li>
                     <li>
                       <a href="#">Testimonials</a>
@@ -151,7 +151,10 @@ export default function Footer() {
                           placeholder="Email Address"
                         />
                         <button type="submit">
-                          <i className="fa fa-send"></i>
+                          <i
+                            className="fas fa-paper-plane"
+                            style={{ fontSize: "17px" }}
+                          ></i>
                         </button>
                       </div>
                     </div>
@@ -174,7 +177,7 @@ export default function Footer() {
         <div className="container">
           <div className="row">
             <div className="col-md-6">
-              <span>Copyright © 2019, All Right Reserved Seobin</span>
+              <span>Copyright © 2020, All Right Reserved Sam&Kellia:)</span>
             </div>
             {/* <!-- End Col --> */}
             <div className="col-md-6">

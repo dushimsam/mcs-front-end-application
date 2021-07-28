@@ -13,7 +13,7 @@ footer p {
   display: block;
   width: 115px;
   height: 3px;
-  background: #007bff;
+  background: #188b0d;
 }
 
 .animate-border:after {
@@ -23,8 +23,8 @@ footer p {
   height: 3px;
   left: 0;
   bottom: 0;
-  border-left: 10px solid #fff;
-  border-right: 10px solid #fff;
+  border-left: 10px solid #151414;
+  border-right: 10px solid #151414;
   -webkit-animation: animborder 2s linear infinite;
   animation: animborder 2s linear infinite;
 }
@@ -60,8 +60,8 @@ footer p {
 }
 
 .animate-border.border-orange:after {
-  border-right-color: #007bff;
-  border-left-color: #007bff;
+  border-right-color: #006285;
+  border-left-color: #006285;
 }
 
 .animate-border.border-ash:after {
@@ -160,8 +160,8 @@ footer p {
 .dk-footer-box-info .footer-social-link a i.fa-twitter {
   background-color: #55acee;
 }
-.dk-footer-box-info .footer-social-link a i.fa-google-plus {
-  background-color: #dd4b39;
+.dk-footer-box-info .footer-social-link a i.fa-whatsapp {
+  background-color: #00827f;
 }
 .dk-footer-box-info .footer-social-link a i.fa-linkedin {
   background-color: #0976b4;
@@ -279,11 +279,11 @@ footer p {
   position: absolute;
   top: 0;
   right: 0;
-  padding: 12px 24px 12px 17px;
+  padding: 7px 15px 5px 10px;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
-  border: 1px solid #007bff;
-  background: #007bff;
+  border: 1px solid #006285;
+  background: #006285;
   color: #fff;
 }
 .dk-footer-form button:hover {
