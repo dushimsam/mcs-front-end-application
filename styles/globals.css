@@ -77,4 +77,8 @@ a {
   .testimonial-card {
     width: 40%;
   }
+
+  .contact-part {
+    width: 45% !important;
+  }
 }
