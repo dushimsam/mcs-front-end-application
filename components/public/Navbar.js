@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light" id="navbar">
+    <nav className="navbar navbar-expand-lg navbar-light" id="top">
       <Link href="/">
         <a className="navbar-brand">
           <Image src="/images/logo.svg" alt="logo" width="80" height="50" />
@@ -20,7 +20,7 @@ export default function Navbar() {
       >
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className="collapse navbar-collapse" id="navbarNav">
+      <div className="collapse navbar-collapse text-center" id="navbarNav">
         <ul className="nav navbar-nav ml-auto mb-4 mr-5">
           <li className="nav-item active">
             <Link href="/">

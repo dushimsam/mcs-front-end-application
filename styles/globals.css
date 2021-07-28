@@ -81,4 +81,8 @@ a {
   .contact-part {
     width: 45% !important;
   }
+
+  .hero_btn {
+    width: 25%;
+  }
 }

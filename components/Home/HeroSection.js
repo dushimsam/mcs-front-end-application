@@ -8,9 +8,9 @@ export default function HeroSection() {
       <div className="d-flex flex-column flex-md-row">
         <div className="col d-flex flex-column justify-content-center align-items-center">
           <h4 className="mt-5 mt-md-1">Welcome to </h4>
-          <h1 className="mt-2">Mount Carmel Primary School</h1>
+          <h1 className="mt-2 text-center">Mount Carmel Primary School</h1>
           <Link href="#contact">
-            <a className="nav-link green-btn rounded-pill w-25 w-sm-75 mt-5">
+            <a className="nav-link green-btn rounded-pill hero_btn mt-5">
               Learn More
             </a>
           </Link>
