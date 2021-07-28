@@ -1,6 +1,6 @@
 export default function FAQ() {
   return (
-    <div className="mt-5 container pt-5 pb-5">
+    <div className="mt-5 container pt-5 pb-5" id="faq">
       <h3 className="numan text-center">Frequently Asked Questions</h3>
       <div className="mt-5">
         <div id="main">

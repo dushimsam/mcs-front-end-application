@@ -207,7 +207,7 @@ export default function Footer() {
       {/* <!-- End Copyright --> */}
       {/* <!-- Back to top --> */}
       <div id="back-to-top" className="back-to-top">
-        <Link href="#navbar">
+        <Link href="#home">
           <button
             className="btn btn-dark"
             title="Back to Top"

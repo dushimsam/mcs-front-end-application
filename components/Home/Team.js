@@ -1,6 +1,6 @@
 export default function Team() {
   return (
-    <div className="mt-5 container pt-5 pb-5">
+    <div className="mt-5 container pt-5 pb-5" id="team">
       <h3 className="numan text-center">Our wonderful teachers</h3>
       <div className="mt-5 d-flex flex-wrap justify-content-center align-items-center team">
         <div className="card mr-md-5 mt-5" style={{ width: "15rem" }}>

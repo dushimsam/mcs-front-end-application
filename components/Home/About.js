@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function About() {
   return (
-    <div className="mt-10 container-fluid bg-gray pt-5 pb-5">
+    <div className="mt-10 container-fluid bg-gray pt-5 pb-5" id="about">
       <h3 className="numan text-center">About Us</h3>
       <div className="container mt-5 d-flex flex-column flex-md-row flex-wrap">
         <div className="about-us-img">
