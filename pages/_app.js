@@ -1,11 +1,11 @@
-import '../styles/globals.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/globals.css'
+// import '../styles/globals.css'
 import "../styles/loading.css";
 import NProgress from 'nprogress'; //nprogress module
 import 'nprogress/nprogress.css'; //styles of nprogress
 import jwt from "jwt-decode";
 import Head from "next/head";
+import Router from 'next/router';
 
 NProgress.configure({showSpinner: false});
 Router.events.on('routeChangeStart', () => NProgress.start());
@@ -18,10 +18,10 @@ if (typeof window !== "undefined") {
   require('popper.js');
   require('bootstrap');
 
-  store = createStore(
-      reducer, /* preloadedState, */
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  );
+  // store = createStore(
+  //     reducer, /* preloadedState, */
+  //     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  // );
 }
 
 
@@ -61,11 +61,9 @@ function AppMeta() {
 function MyApp({ Component, pageProps }) {
   return (
     <div>
-    <Snack/>
-    <AppMeta/>
-    <Component {...pageProps} />
-    <AddToCartModel/>
-</div>
+      <AppMeta />
+      <Component {...pageProps} />
+    </div>
   )
 }
 
