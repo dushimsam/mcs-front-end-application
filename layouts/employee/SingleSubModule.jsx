@@ -1,14 +1,16 @@
-import AdminTableTitle from "../../components/reusable/AdminTableTitle";
+import AdminTableTitle from "../../components/shared/AdminTableTitle";
 import Head from "next/head";
-import Badge from "../../components/reusable/Badge";
+import Badge from "../../components/shared/Badge";
 import React, { useState } from "react";
-import AdminDashboard from "../dashboardsV2/AdminDashboard";
+import EmployeeDashboard from "../../components/dashboards/EmployeeDashboard";
+import { app_info } from "../../utils/constants";
 
 function TableLayout({
                          Page,
                          name,
                          showFilter,
                          hideSearch,
+                         isOrder,
                          hideAction,
                          route,
                          count,
@@ -19,29 +21,34 @@ function TableLayout({
                          status,
                          panes
                      }) {
-    const handleSearch = () => {
-        setSearch(searchText);
+
+    const [value, setValue] = useState("");
+
+    const handleChange = e => {
+        setValue(e.target.value);
     };
-    const [ searchText, setSearchText ] = useState('');
+
+    const handleSubmit = e => {
+        // e.preventDefault();
+        setSearch(value);
+    };
     
-    const handleChange = (event) => {
-        setSearchText(event.target.value);
-    }
-    const handleKeyDown = (event) => {
-        console.log("ksd");
-        if (event.key === "Enter") {
-            event.preventDefault();
-            handleSearch();
+
+    const handleKeypress = e => {
+
+    // document.getElementById("myBtn").click();
+        if (e.key==="Enter") {
+            handleSubmit();
         }
     };
-    
+
     return (
-        <div className={"p-0 m-0 px-4"}>
+        <div className={"container-fluid p-0 m-0"}>
             <Head>
-                <title>{name} | Korea Auto Rwanda</title>
+                <title>{name} | {app_info.name}</title>
             </Head>
-            
-            <div className={"row mb-5"}>
+
+            <div className={"row"}>
                 {!isArray ? (
                     <div className="col-6 col-md-3">
                         <Badge text={name} value={count} link={`${route}`} col1={"col-8"} col2={"col-4"}/>
@@ -56,17 +63,17 @@ function TableLayout({
                         ))}
                     </React.Fragment>
                 )}
-            
+
             </div>
-            
-            <div className="my-3 card mx-0 px-5">
+
+            <div className="my-3 bg-white" style={styles.content}>
                 <div className="col-12 pt-4 pb-0">
-                    <div className={'row ' + (!showFilter ? 'justify-content-between' : '')}>
+                    <div className={'row ' + (!showFilter || isOrder ? 'justify-content-between' : '')}>
                         {showFilter ? (
-                            <div className="col-5 px-0">
+                            <div className={(isOrder) ? 'col-8' : "col-5"}>
                                 <div className={'mb-3'}>
                                     <span className="mr-4"
-                                          style={{ fontSize: '0.9em', color: '#707070', textDecoration: 'underline' }}>Filter by</span>
+                                          style={{fontSize: '0.9em', color: '#707070', textDecoration: 'underline'}}>Filter by</span>
                                     {filters.map((filter) => (
                                         <FilterButton name={filter.name} val={filter.val}
                                                       vals={(filter.vals) ? filter.vals : null} setFilter={setFilter}/>
@@ -74,34 +81,33 @@ function TableLayout({
                                 </div>
                             </div>
                         ) : null}
-                        <div className="col-4 px-0">
+                        <div className={(isOrder) ? 'col-3' : "col-4"}>
                             {(status == "new" && !hideSearch) ?
                                 <React.Fragment>
-                                    <input className={'form-control col-9'}
-                                           value={searchText}
-                                           onChange={handleChange}
-                                           onKeyDown={handleKeyDown}
-                                           style={styles.formControl}
-                                           placeholder={'Search'}/>
-                                    <svg xmlns="http://www.w3.org/2000/svg" onClick={handleSearch} viewBox="0 0 24 24"
+                                    <svg xmlns="http://www.w3.org/2000/svg"  id="searchBtn" onClick={handleSubmit} viewBox="0 0 24 24"
                                          width="24" style={styles.searchIcon} height="24">
                                         <path fill="none" d="M0 0h24v24H0z"/>
                                         <path
                                             d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/>
                                     </svg>
-                                
+                                    <input className={'form-control ' + (isOrder) ? 'col-12' : "col-9"}
+                                           style={styles.formControl}
+                                           value={value}
+                                           onChange={handleChange}
+                                           onKeyPress={handleKeypress}
+                                           placeholder={'Search'}/>
                                 </React.Fragment> : ""
                             }
                         </div>
                         {!hideAction ? (
-                                <div className={status === "new" ? "col-3 px-0" : "col-6 px-0"}>
-                                    <AdminTableTitle name={name} route={route} status={status}/>
+                                <div className={status === "new" ? "col-3" : "col-6"}>
+                                    <AdminTableTitle isSalesManager={true} name={name} route={route} status={status}/>
                                 </div>) :
                             null
                         }
                     </div>
                 </div>
-                <div className="mt-4">
+                <div className="container mt-4">
                     {Page}
                 </div>
             </div>
@@ -109,7 +115,7 @@ function TableLayout({
     )
 }
 
-const FilterButton = ({ name, val, vals, setFilter }) => {
+const FilterButton = ({name, val, vals, setFilter}) => {
     return (
         <React.Fragment>
             <button style={styles.button} onClick={() => {
@@ -122,6 +128,7 @@ const FilterButton = ({ name, val, vals, setFilter }) => {
 }
 export default function SingleSubModuleLayout({
                                                   Content,
+                                                  isOrder,
                                                   name,
                                                   route,
                                                   count,
@@ -133,35 +140,35 @@ export default function SingleSubModuleLayout({
                                                   hideAction,
                                                   hideSearch,
                                                   panes,
-                                                  isArray,
+                                                  isArray
                                               }) {
     const DEFAULT_FILTERS = [
-        { name: 'All', val: 'ALL' },
-        { name: 'Active', val: 'ACTIVE' },
-        { name: 'In active', val: 'INACTIVE' },
+        {name: 'All', val: 'ALL'},
+        {name: 'Active', val: 'ACTIVE'},
+        {name: 'In active', val: 'INACTIVE'},
     ];
-    
-    if (isArray) {
-        return (
-            <AdminDashboard>
-                <TableLayout Page={Content} filters={(filters) ? filters : DEFAULT_FILTERS} name={name}
-                             hideAction={hideAction} isArray={true} hideSearch={hideSearch} panes={panes} route={route}
-                             showFilter={showFilter} setSearch={setSearch} setFilter={setFilter} status={status}/>
-            </AdminDashboard>
-        )
-    }
+
+    if (isArray) return (
+        <EmployeeDashboard>
+            <TableLayout Page={Content} isOrder={isOrder} filters={(filters) ? filters : DEFAULT_FILTERS} name={name}
+                         hideAction={hideAction} isArray={true} hideSearch={hideSearch} panes={panes} route={route}
+                         showFilter={showFilter} setSearch={setSearch} setFilter={setFilter} status={status}/>
+        </EmployeeDashboard>
+    )
     return (
-        <AdminDashboard>
-            <TableLayout Page={Content} name={name} filters={(filters) ? filters : DEFAULT_FILTERS}
+        <EmployeeDashboard>
+            <TableLayout Page={Content} name={name} isOrder={isOrder} filters={(filters) ? filters : DEFAULT_FILTERS}
                          showFilter={showFilter} hideAction={hideAction} hideSearch={hideSearch} route={route}
                          count={count} setSearch={setSearch} setFilter={setFilter} status={status}/>
-        </AdminDashboard>
+        </EmployeeDashboard>
     )
 }
 
 const styles = {
     content: {
         minHeight: "70vh",
+        marginRight: '29px',
+        padding: '10px 32px'
     },
     button: {
         marginRight: '10px',
@@ -176,17 +183,17 @@ const styles = {
         border: 'none',
         borderBottom: '1px solid rgba(19, 19, 19, 0.21)',
         height: 'auto',
-        padding: '4px 0px'
+        padding: '4px 30px'
     },
     searchIcon: {
         position: 'absolute',
-        right: '5.4rem',
+        left: '14px',
         zIndex: 1,
         fill: '#707070',
-        top: '5px',
-        width: '15px',
-        height: '15px',
-        cursor: 'pointer'
+        top: '1px',
+        width: '23px',
+        height: '20px',
+        fontWeight: 'bold'
     }
-    
+
 }

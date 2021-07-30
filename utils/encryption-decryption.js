@@ -1,7 +1,7 @@
 import {AES, enc} from 'crypto-js';
 
-const GLOBAL_KEY = "****Korea&234@_Auto1800@@@_#Parts****"
-const GLOBAL_KEY_SIMPLE = "****Korea&2346666666666_____353232WEB_LINKS_URLSSSSSSSSS####*****";
+const GLOBAL_KEY = "****Mcs&234@_Auto1800@@@_#Parts****"
+const GLOBAL_KEY_SIMPLE = "****Mcs&2346666666666_____353232WEB_LINKS_URLSSSSSSSSS####*****";
 export const encryptText = (text) =>{
     const encryptedText = AES.encrypt(text,GLOBAL_KEY).toString();  
     return encryptedText;
