@@ -7,15 +7,15 @@ import {encryptText,decryptText} from "../../utils/encryption-decryption"
 
 class AuthService {
     login(data) {
-        return http.post('/auth/login', data);
+        return http.post('/users/auth/login', data);
     }
 
     initiateResetPassword(data) {
-        return http.post('/auth/reset-password/initial', data);
+        return http.post('/users/auth/reset-password/initial', data);
     }
 
     resetPassword(data) {
-        return http.post('/auth/reset-password', data);
+        return http.post('/users/auth/reset-password', data);
     }
 
     getEncToken() {

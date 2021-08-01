@@ -1,9 +1,10 @@
 # mcs-front-end-application
-This is the new front-end for the Korea - Auto Parts
+
+This is the new front-end for the Mount Carmel School
 
 It is under control of [Kellia and DushSam]
 
-> We are going to work as soon as Possible so that we deliver on time (OUR GOAL - 3-weeks) 
+> We are going to work as soon as Possible so that we deliver on time (OUR GOAL - 3-weeks)
 
 ### Helping links
 

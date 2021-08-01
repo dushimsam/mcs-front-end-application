@@ -23,12 +23,26 @@ class UserService {
         return http.get(`/users/${id}`);
     }
 
+    
+    getByUsername(username) {
+        return http.get(`/users/username/${username}`);
+    }
+
+       
+    getByEmail(email) {
+        return http.get(`/users/email/${email}`);
+    }
+
     create(data) {
         return http.post("/users", data)
     }
 
     update(id, data) {
         return http.put(`/users/${id}`, data)
+    }
+
+    toggleDisable(id) {
+        return http.put(`/users/toggle-disable/${id}`)
     }
 
     delete(id) {
@@ -38,4 +52,4 @@ class UserService {
 
 }
 
-export default new CompanyService();
+export default new UserService();
