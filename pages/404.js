@@ -20,7 +20,7 @@ export default function NotFound() {
                             <h3 className="mt-5 pb-2 text-secondary">We can't find the page you are looking for.</h3>
                         </div>
                         <div className="col-sm-7 mx-auto">
-                            <img className="w-100 d-block" src={"/img/imageedit_6_9080572701.png"} alt="404 error" />
+                            <img className="w-100 d-block" src={"/app-imgs/not-found.png"} alt="404 error" />
                         </div>
                     </div>
                     <div className="text-center mt-5">
