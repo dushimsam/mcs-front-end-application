@@ -1,0 +1,51 @@
+.type-message {
+  bottom: 0;
+  width: 67%;
+  right: 18px;
+}
+
+.new-message-btn {
+  z-index: 20;
+  color: #31b0d5;
+  font-size: 35px;
+  top: 90%;
+  left: 24%;
+  cursor: pointer;
+  /* bottom:; */
+}
+
+.chat-sidebar {
+  width: 30% !important;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.bg-blue {
+  background-color: #31b0d5 !important;
+}
+
+.font-sm {
+  font-size: 14px;
+  color: rgb(66, 66, 66);
+}
+
+.user-name {
+  color: rgb(43, 43, 43) !important;
+}
+/* .chat-sidebar {
+  position: fixed;
+  width: 150px;
+  height: 100%;
+}
+*/
+/* .chat-box {
+  width: 70% !important;
+} */
+
+.chat-sidebar .active {
+  background-color: rgb(245, 245, 245) !important;
+}
+
+.chat-box .fa-paper-plane {
+  color: #31b0d5;
+}

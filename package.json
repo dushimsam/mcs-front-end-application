@@ -36,7 +36,6 @@
     "redux-thunk": "^2.3.0",
     "yamde": "^1.6.1",
     "yup": "^0.32.9"
-
   },
   "devDependencies": {
     "eslint": "7.31.0",
