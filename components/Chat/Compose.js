@@ -1,3 +1,6 @@
 export default function Compose() {
-  return <div>Compose message</div>;
+  return (
+    //   New chat box
+    <div style={{ height: "100vh", width: "60%" }}>Compose message</div>
+  );
 }

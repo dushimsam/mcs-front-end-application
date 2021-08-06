@@ -1,88 +1,18 @@
 import { useEffect, useState } from "react";
 
-export default function ChooseReciever({ setShowMsg }) {
-  const [receivers, setReceivers] = useState([
-    {
-      id: 1,
-      fname: "Jason",
-      lname: "Porker",
-      profile:
-        "https://i.pinimg.com/originals/70/e8/a0/70e8a0258a9bb5c0be5f10b5a7646733.jpg",
-    },
-    {
-      id: 2,
-      fname: "Jason",
-      lname: "Porker",
-      profile: "https://wallpaperaccess.com/full/2068794.jpg",
-    },
-  ]);
-  const [parents, setParents] = useState([
-    {
-      id: 1,
-      fname: "Blue",
-      lname: "Lark",
-      profile:
-        "https://i.pinimg.com/originals/70/e8/a0/70e8a0258a9bb5c0be5f10b5a7646733.jpg",
-    },
-    {
-      id: 2,
-      fname: "Jason",
-      lname: "Porker",
-      profile: "https://wallpaperaccess.com/full/2068794.jpg",
-    },
-    {
-      id: 3,
-      fname: "Jason",
-      lname: "Porker",
-      profile:
-        "https://i.pinimg.com/originals/66/41/18/664118c62dc574f2eeff8690225bb9a1.jpg",
-    },
-    {
-      id: 4,
-      fname: "Jason",
-      lname: "Porker",
-      profile:
-        "https://i.pinimg.com/originals/70/e8/a0/70e8a0258a9bb5c0be5f10b5a7646733.jpg",
-    },
-    {
-      id: 5,
-      fname: "Jason",
-      lname: "Porker",
-      profile: "https://wallpaperaccess.com/full/2068794.jpg",
-    },
-  ]);
+export default function ChooseReciever({
+  parents,
+  receivers,
+  addReciever,
+  removeReceiver,
+  searchParent,
+  searchResults,
+  setCompose,
+}) {
   const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState(null);
-
-  const addReciever = (index, pId) => {
-    let temp = [...receivers];
-    let pIndex = receivers.findIndex((r) => r.id === pId);
-    if (pIndex > -1) return;
-    temp.push(parents[index]);
-    setReceivers(temp);
-  };
-
-  const removeReceiver = (pId) => {
-    let temp = [...receivers];
-    temp = temp.filter((p) => p.id !== pId);
-    setReceivers(temp);
-  };
-
-  const searchParent = () => {
-    if (search !== " " && search !== "") {
-      let temp = [...parents];
-      let term = search.toLowerCase();
-      let results = temp.filter(
-        (p) =>
-          p.fname.toLowerCase().startsWith(term) ||
-          p.lname.toLowerCase().startsWith(term)
-      );
-      setSearchResults(results);
-    } else setSearchResults(null);
-  };
 
   useEffect(() => {
-    searchParent();
+    searchParent(search);
   }, [search]);
   return (
     <div className="choose-receiver pt-5 position-relative pl-md-4">
@@ -158,7 +88,12 @@ export default function ChooseReciever({ setShowMsg }) {
           ))}
         </div>
       )}
-      <button className="btn rounded-pill compose-btn">Compose</button>
+      <button
+        className="btn rounded-pill compose-btn"
+        onClick={() => setCompose(true)}
+      >
+        Compose
+      </button>
     </div>
   );
 }
