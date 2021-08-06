@@ -75,10 +75,13 @@
   border-radius: 10px;
   font-size: 14px;
   color: #1b687e;
+  cursor: pointer;
 }
 
 .choose-receiver .name {
   font-size: 15px;
+  color: rgb(99, 99, 99);
+  cursor: pointer;
   /* font-w */
 }
 

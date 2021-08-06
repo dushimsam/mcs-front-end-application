@@ -3,24 +3,24 @@ import { useState } from "react";
 import ChooseReciever from "../components/Chat/ChooseReciever";
 
 export default function Chat() {
-  const [showOptions, setShowOptions] = useState(false);
+  const [showOptions, setShowOptions] = useState(true);
   const [showMsg, setShowMsg] = useState(true);
   const [receiverNum, setRecieverNum] = useState(0);
 
   const toOne = () => {
     setRecieverNum(1);
     setShowMsg(false);
-    setShowOptions(false);
+    setShowOptions(true);
   };
   const toMany = () => {
     setRecieverNum(2);
     setShowMsg(false);
-    setShowOptions(false);
+    setShowOptions(true);
   };
   const toAll = () => {
     setRecieverNum(3);
     setShowMsg(false);
-    setShowOptions(false);
+    setShowOptions(true);
   };
   return (
     <div className="container-fluid position-relative">
