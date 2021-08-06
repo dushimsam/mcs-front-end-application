@@ -1,5 +1,8 @@
 import { PlusCircleFilled } from "@ant-design/icons";
+import { useState } from "react";
+
 export default function Chat() {
+  const [showOptions, setShowOptions] = useState("false");
   return (
     <div className="container-fluid position-relative">
       {/* <!-- For demo purpose--> */}
@@ -10,7 +13,15 @@ export default function Chat() {
           <div className="bg-white position-fixed chat-sidebar">
             {/* <div classNameName="position-fixed "> */}
             {/* <MessageFilled className="position-fixed new-message" /> */}
-            <PlusCircleFilled className="position-fixed new-message-btn" />
+            <div className="new-chat-option position-fixed shadow py-3">
+              <div className="chat-option">One Parent</div>
+              <div className="chat-option">Many Parents</div>
+              <div>All Parents</div>
+            </div>
+            <PlusCircleFilled
+              className="position-fixed new-message-btn"
+              onClick={() => setShowOptions(true)}
+            />
             {/* </div> */}
             <div className="bg-gray px-4 py-2 bg-light">
               <p className="h5 mb-0 py-1">Chat</p>
