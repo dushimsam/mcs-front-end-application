@@ -1,5 +1,5 @@
 import { PlusCircleFilled } from "@ant-design/icons";
-export default function chat() {
+export default function Chat() {
   return (
     <div className="container-fluid position-relative">
       {/* <!-- For demo purpose--> */}
