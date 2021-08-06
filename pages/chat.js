@@ -7,18 +7,13 @@ export default function Chat() {
   const [showMsg, setShowMsg] = useState(true);
   const [receiverNum, setRecieverNum] = useState(0);
 
-  const toOne = () => {
+  const toOneOrMany = () => {
     setRecieverNum(1);
     setShowMsg(false);
     setShowOptions(true);
   };
-  const toMany = () => {
-    setRecieverNum(2);
-    setShowMsg(false);
-    setShowOptions(true);
-  };
   const toAll = () => {
-    setRecieverNum(3);
+    setRecieverNum(2);
     setShowMsg(false);
     setShowOptions(true);
   };
@@ -36,14 +31,11 @@ export default function Chat() {
               className="new-chat-option position-fixed shadow py-3"
               hidden={showOptions}
             >
-              <div className="chat-option px-4 py-2 add-border" onClick={toOne}>
-                One Parent
-              </div>
               <div
                 className="chat-option px-4 py-2 add-border"
-                onClick={toMany}
+                onClick={toOneOrMany}
               >
-                Many Parents
+                One or Many Parent(s)
               </div>
               <div className="chat-option px-4 pt-2" onClick={toAll}>
                 All Parents
