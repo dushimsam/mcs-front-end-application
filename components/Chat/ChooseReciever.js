@@ -8,6 +8,7 @@ export default function ChooseReciever({
   searchParent,
   searchResults,
   setCompose,
+  setShowMsg,
 }) {
   const [search, setSearch] = useState("");
 
