@@ -1,9 +1,10 @@
 import { PlusCircleFilled } from "@ant-design/icons";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import ChooseReciever from "./ChooseReciever";
-import Compose from "./Compose";
 
 export default function Chat() {
+  const authUser = useSelector((state) => state.authUser);
   const [showOptions, setShowOptions] = useState(true);
   const [showMsg, setShowMsg] = useState(true);
   const [receiverNum, setRecieverNum] = useState(0);
@@ -326,9 +327,6 @@ export default function Chat() {
     }
   }, [compose]);
 
-  // useEffect(() => {
-  //   composeMessage();
-  // }, [message]);
   return (
     <div className="container-fluid position-relative">
       <div className="row rounded-lg overflow-hidden shadow">
