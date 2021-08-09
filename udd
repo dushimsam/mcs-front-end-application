@@ -1,29 +1,7 @@
-[
-    {
-        "id": 1,
-        "messageType": "TEXT",
-        "message": "Bite mubyeyi",
-        "messageDirection": "FORWARD",
-        "messageStatus": "PARTICULAR",
-        "sender": {
-            "id": 3,
-            "firstName": "Rurira",
-            "lastName": "Aumari",
-            "phone": "0789820820",
-            "profile": "htttp:...",
-            "userName": "aumari",
-            "gender": "male",
-            "email": "aumari@gmail.com",
-            "isLocked": false,
-            "isConfirmed": false,
-            "category": "SCHOOL_EMPLOYEE",
-            "createdAt": "2021-08-05T11:51:57.330+00:00",
-            "lastModifiedAt": "2021-08-05T11:51:57.330+00:00"
-        },
-        "createdAt": "2021-08-06T12:44:26.353+00:00",
-        "lastModifiedAt": "2021-08-06T12:44:26.353+00:00"
-    },
-    {
+{
+    "id": 2,
+    "isRead": false,
+    "message": {
         "id": 2,
         "messageType": "TEXT",
         "message": "Amakuru yanyu babyeyi beza",
@@ -46,10 +24,87 @@
         },
         "createdAt": "2021-08-06T12:50:01.060+00:00",
         "lastModifiedAt": "2021-08-06T12:50:01.060+00:00"
+    },
+    "receiver": {
+        "id": 4,
+        "firstName": "Kariza",
+        "lastName": "Eimable",
+        "phone": "0789820822",
+        "profile": "htttp:...",
+        "userName": "kariza",
+        "gender": "female",
+        "email": "kariza@gmail.com",
+        "isLocked": false,
+        "isConfirmed": false,
+        "category": "PARENT",
+        "createdAt": "2021-08-05T11:52:52.214+00:00",
+        "lastModifiedAt": "2021-08-05T11:52:52.214+00:00"
+    },
+    "createdAt": "2021-08-06T12:50:02.432+00:00",
+    "lastModifiedAt": "2021-08-06T12:50:02.432+00:00"
+}
+
+
+
+
+
+  const authUser = useSelector((state) => state.authUser);
+
+  const [userChats, setUserChats] = useState([]);
+  const [filteredChats, setfilteredChats] = useState([]);
+  const [chatsRetrived, setChatsRetrived] = useState(false);
+
+  const [currentChatId, setCurrentChatId] = useState("2");
+
+  const [currentChat, setCurrentChat] = useState({});
+
+
+  const filterMessages = () => {
+    let temp = [...chats];
+    temp = temp.filter((c) => c.receiver.id === currentChatId);
+    setCurrentChat(temp);
+  };
+
+  useEffect(() => {
+    filterMessages();
+  }, [currentChatId]);
+
+  useEffect(() => {
+    if (compose) {
+      // //new chat
+      let chat = newChat();
+      setCurrentChatId(chat.receiver.id);
     }
-]
+  }, [compose]);
 
+  const getChats = async () => {
+    const res = chatService.getUserSentMessages(authUser.id);
+    res.then((data) => {
+      data.data.map((msg) =>
+        chatService
+          .getParentMessageReceiver(msg.id)
+          .then((d) => setUserChats(userChats.concat(d.data)))
+      );
+      filterChats();
+    });
+    setChatsRetrived(true);
+    // filterChats();
+  };
 
+  const filterChats = () => {
+    let temp = [...userChats];
+    let receiver = temp.map((c) => c);
+    console.log(temp);
+  };
 
+  // console.log(chatsRetrived);
 
-{}
+  useEffect(() => {
+    // testGet();
+    if (authUser) {
+      if (authUser.id && !chatsRetrived) {
+        getChats();
+        filterChats();
+      }
+    }
+  });
