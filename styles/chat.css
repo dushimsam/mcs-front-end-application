@@ -43,7 +43,9 @@
 } */
 
 .chat-sidebar .active {
-  background-color: rgb(245, 245, 245) !important;
+  /* background-color: rgb(245, 245, 245) !important; */
+  background: #31afd5bd !important;
+  border-color: #31afd5bd !important;
 }
 
 .chat-box .fa-paper-plane {

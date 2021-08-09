@@ -3,356 +3,77 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import chatService from "../../services/messaging/chat.service";
 import ChooseReciever from "./ChooseReciever";
+import Data from "./data.json";
 
 export default function Chat() {
-  const authUser = useSelector((state) => state.authUser);
-  const [showOptions, setShowOptions] = useState(true);
-  const [showMsg, setShowMsg] = useState(true);
-  const [receiverNum, setRecieverNum] = useState(0);
-  const [compose, setCompose] = useState(false);
-  const [receivers, setReceivers] = useState([
-    {
-      id: 1,
-      fname: "Jason",
-      lname: "Porker",
-      profile:
-        "https://i.pinimg.com/originals/70/e8/a0/70e8a0258a9bb5c0be5f10b5a7646733.jpg",
-    },
-    {
-      id: 2,
-      fname: "Jason",
-      lname: "Porker",
-      profile: "https://wallpaperaccess.com/full/2068794.jpg",
-    },
-  ]);
-  const [parents, setParents] = useState([
-    {
-      id: 1,
-      fname: "Blue",
-      lname: "Lark",
-      profile:
-        "https://i.pinimg.com/originals/70/e8/a0/70e8a0258a9bb5c0be5f10b5a7646733.jpg",
-    },
-    {
-      id: 2,
-      fname: "Jason",
-      lname: "Porker",
-      profile: "https://wallpaperaccess.com/full/2068794.jpg",
-    },
-    {
-      id: 3,
-      fname: "Jason",
-      lname: "Porker",
-      profile:
-        "https://i.pinimg.com/originals/66/41/18/664118c62dc574f2eeff8690225bb9a1.jpg",
-    },
-    {
-      id: 4,
-      fname: "Jason",
-      lname: "Porker",
-      profile:
-        "https://i.pinimg.com/originals/70/e8/a0/70e8a0258a9bb5c0be5f10b5a7646733.jpg",
-    },
-    {
-      id: 5,
-      fname: "Jason",
-      lname: "Porker",
-      profile: "https://wallpaperaccess.com/full/2068794.jpg",
-    },
-  ]);
-  const [searchResults, setSearchResults] = useState(null);
-
-  const [chats, setChats] = useState([
-    {
-      sender: "uid",
-      receiver: {
-        id: "221a",
-        fname: "Jason",
-        lname: "Doe",
-        profile: "/images/user.jpg",
-      },
-      messages: [
-        {
-          content:
-            "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.",
-          datedone: new Date().toString().split(" "),
-          status: "FORWARD",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "REVERSE",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "FORWARD",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "REVERSE",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "FORWARD",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "REVERSE",
-        },
-      ],
-    },
-    {
-      sender: "uid",
-      receiver: {
-        id: "221b",
-        fname: "Jason",
-        lname: "Doe",
-        profile: "/images/user.jpg",
-      },
-      messages: [
-        {
-          content:
-            "Second Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.",
-          datedone: new Date().toString().split(" "),
-          status: "FORWARD",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "REVERSE",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "FORWARD",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "REVERSE",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "FORWARD",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "REVERSE",
-        },
-      ],
-    },
-    {
-      sender: "uid",
-      receiver: {
-        id: "221c",
-        fname: "Jason",
-        lname: "Doe",
-        profile: "/images/user.jpg",
-      },
-      messages: [
-        {
-          content:
-            "Third Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.",
-          datedone: new Date().toString().split(" "),
-          status: "FORWARD",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "REVERSE",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "FORWARD",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "REVERSE",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "FORWARD",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "REVERSE",
-        },
-      ],
-    },
-    {
-      sender: "uid",
-      receiver: {
-        id: "221d",
-        fname: "Jason",
-        lname: "Doe",
-        profile: "/images/user.jpg",
-      },
-      messages: [
-        {
-          content:
-            "Fourth Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.",
-          datedone: new Date().toString().split(" "),
-          status: "FORWARD",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "REVERSE",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "FORWARD",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "REVERSE",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "FORWARD",
-        },
-        {
-          content: "Test, which is a new approach to have",
-          datedone: new Date().toString().split(" "),
-          status: "REVERSE",
-        },
-      ],
-    },
-  ]);
-
-  const [userChats, setUserChats] = useState([]);
-  const [chatsRetrived, setChatsRetrived] = useState(false);
+  // const authUser = useSelector((state) => state.authUser);
+  const [messages, setMessages] = useState([...Data]);
+  const [chats, setChats] = useState([]);
+  const [currentChatId, setCurrentChatId] = useState("");
+  const [currentChat, setCurrentChat] = useState(undefined);
 
   const [message, setMessage] = useState("");
 
-  const [currentChatId, setCurrentChatId] = useState("221a");
+  const [showMsg, setShowMsg] = useState(true);
+  const [showOptions, setShowOptions] = useState(true);
 
-  const [currentChat, setCurrentChat] = useState([]);
+  const makeChats = () => {
+    let messageCopy = [...messages];
 
-  const addReciever = (index, pId) => {
-    let temp = [...receivers];
-    let pIndex = receivers.findIndex((r) => r.id === pId);
-    if (pIndex > -1) return;
-    temp.push(parents[index]);
-    setReceivers(temp);
-  };
+    //get receivers
+    let newChats = messageCopy.map((msg) => {
+      return {
+        receiver: { ...msg.receiver },
+        messages: [],
+      };
+    });
 
-  const removeReceiver = (pId) => {
-    let temp = [...receivers];
-    temp = temp.filter((p) => p.id !== pId);
-    setReceivers(temp);
-  };
-
-  const searchParent = (search) => {
-    if (search !== " " && search !== "") {
-      let temp = [...parents];
-      let term = search.toLowerCase();
-      let results = temp.filter(
-        (p) =>
-          p.fname.toLowerCase().startsWith(term) ||
-          p.lname.toLowerCase().startsWith(term)
+    let newChatsUnique = newChats.filter((c, index) => {
+      return (
+        newChats.findIndex((x) => x.receiver.id === c.receiver.id) === index
       );
-      setSearchResults(results);
-    } else setSearchResults(null);
+    });
+
+    //get messages for each receiver
+    messageCopy.map((msg) => {
+      let index = newChatsUnique.findIndex(
+        (x) => x.receiver.id === msg.receiver.id
+      );
+      newChatsUnique[index].messages.push({
+        ...msg.message,
+        lastModifiedAt: new Date(msg.message.lastModifiedAt)
+          .toString()
+          .split(" "),
+      });
+    });
+
+    setChats(newChatsUnique);
+    setCurrentChatId(newChatsUnique[0].receiver.id);
+    setCurrentChat(newChatsUnique[0]);
   };
 
-  const toOneOrMany = () => {
-    setRecieverNum(1);
-    setShowMsg(false);
-    setShowOptions(true);
-  };
-  const toAll = () => {
-    setRecieverNum(2);
-    setShowMsg(false);
-    setShowOptions(true);
-  };
+  const toOneOrMany = () => {};
+  const toAll = () => {};
 
   const filterMessages = () => {
     let temp = [...chats];
     temp = temp.filter((c) => c.receiver.id === currentChatId);
-    setCurrentChat(temp);
-  };
-
-  const newChat = () => {
-    let new_c = {
-      sender: "uid",
-      receiver: { ...receivers[0] },
-      messages: [],
-    };
-
-    let temp = [...chats];
-    temp = [new_c].concat(temp);
-    setChats(temp);
-    setShowMsg(true);
-    return new_c;
+    setCurrentChat(temp[0]);
   };
 
   const composeMessage = (e) => {
     e.preventDefault();
-    // if (e.key === "Enter") {
-    //   if (message !== "") {
-    //     console.log("Message sent");
-    //   }
-    // }
-    /* TODO: Check if reverse or forward */
-    let temp = { ...currentChat[0] };
-    let newMessage = {
-      content: message,
-      datedone: new Date().toString().split(" "),
-      status: "FORWARD",
-    };
-    temp.messages = temp.messages.concat(newMessage);
-    console.log(temp);
-    setCurrentChat([temp]);
+    /* Send Message */
+    console.log("Send message");
   };
+
+  useEffect(() => {
+    makeChats();
+  }, []);
 
   useEffect(() => {
     filterMessages();
   }, [currentChatId]);
-
-  useEffect(() => {
-    if (compose) {
-      // //new chat
-      let chat = newChat();
-      setCurrentChatId(chat.receiver.id);
-    }
-  }, [compose]);
-
-  const getChats = async () => {
-    const res = chatService.getUserSentMessages(authUser.id);
-    res.then((data) => {
-      data.data.map((msg) =>
-        chatService
-          .getParentMessageReceiver(msg.id)
-          .then((d) => setUserChats(userChats.concat(d.data)))
-      );
-    });
-    setChatsRetrived(true);
-  };
-
-  console.log(userChats);
-
-  useEffect(() => {
-    // testGet();
-    if (authUser) {
-      if (authUser.id && !chatsRetrived) {
-        getChats();
-      }
-    }
-  }, [authUser]);
 
   return (
     <div className="container-fluid position-relative">
@@ -404,18 +125,18 @@ export default function Chat() {
                       <div className="media-body ml-4">
                         <div className="d-flex align-items-center justify-content-between mb-1">
                           <h6 className="mb-0 user-name">
-                            {chat.receiver.fname} {chat.receiver.lname}
+                            {chat.receiver.firstName} {chat.receiver.lastName}
                           </h6>
                           {chat.messages.length !== 0 && (
                             <small className="small font-weight-bold">
-                              {chat.messages[0].datedone[2]}{" "}
-                              {chat.messages[0].datedone[1]}
+                              {chat.messages[0].lastModifiedAt[2]}{" "}
+                              {chat.messages[0].lastModifiedAt[1]}
                             </small>
                           )}
                         </div>
                         <p className="font-sm mb-0 text-small">
                           {chat.messages.length !== 0 &&
-                            chat.messages[0].content}
+                            chat.messages[0].message}
                         </p>
                       </div>
                     </div>
@@ -432,18 +153,18 @@ export default function Chat() {
               className="pr-4 py-5 content bg-white"
               style={{ height: "100vh" }}
             >
-              {currentChat.length !== 0 ? (
-                currentChat[0].messages.length !== 0 ? (
-                  currentChat[0].messages.map((msg, index) => (
+              {chats.length !== 0 && currentChat ? (
+                currentChat.messages.length !== 0 ? (
+                  currentChat.messages.map((msg, index) => (
                     <div
                       className={`media w-50 mb-3 ${
-                        msg.status === "FORWARD" && "ml-auto"
+                        msg.messageDirection === "FORWARD" && "ml-auto"
                       }`}
                       key={index}
                     >
-                      {msg.status === "REVERSE" ? (
+                      {msg.messageDirection === "REVERSE" ? (
                         <img
-                          src={currentChat[0].receiver.profile}
+                          src="/images/user.jpg"
                           alt="user"
                           width="50"
                           height="50"
@@ -453,23 +174,25 @@ export default function Chat() {
                       <div className="media-body ml-3">
                         <div
                           className={`rounded py-2 px-3 mb-2 ${
-                            msg.status === "FORWARD" ? "bg-blue" : "bg-light"
+                            msg.messageDirection === "FORWARD"
+                              ? "bg-blue"
+                              : "bg-light"
                           } `}
                         >
                           <p
                             className={`text-small mb-0 ${
-                              msg.status === "FORWARD"
+                              msg.messageDirection === "FORWARD"
                                 ? "text-white"
                                 : "text-muted"
                             }`}
                           >
-                            {msg.content}
+                            {msg.message}
                           </p>
                         </div>
                         <p className="small text-muted">
-                          {msg.datedone[4].split(":")[0]}:
-                          {msg.datedone[4].split(":")[1]} | {msg.datedone[1]}{" "}
-                          {msg.datedone[2]}
+                          {msg.lastModifiedAt[4].split(":")[0]}:
+                          {msg.lastModifiedAt[4].split(":")[1]} |{" "}
+                          {msg.lastModifiedAt[1]} {msg.lastModifiedAt[2]}
                         </p>
                       </div>
                     </div>
@@ -504,7 +227,7 @@ export default function Chat() {
                     id="button-addon2"
                     type="submit"
                     className="btn btn-link"
-                    onClick={composeMessage}
+                    // onClick={composeMessage}
                   >
                     {" "}
                     <i className="fa fa-paper-plane"></i>
@@ -514,16 +237,17 @@ export default function Chat() {
             </form>
           </div>
         ) : (
-          <ChooseReciever
-            parents={parents}
-            receivers={receivers}
-            addReciever={addReciever}
-            removeReceiver={removeReceiver}
-            searchParent={searchParent}
-            searchResults={searchResults}
-            setCompose={setCompose}
-            setShowMsg={setShowMsg}
-          />
+          <div>Choose</div>
+          // <ChooseReciever
+          //   parents={parents}
+          //   receivers={receivers}
+          //   addReciever={addReciever}
+          //   removeReceiver={removeReceiver}
+          //   searchParent={searchParent}
+          //   searchResults={searchResults}
+          //   setCompose={setCompose}
+          //   setShowMsg={setShowMsg}
+          // />
         )}
       </div>
     </div>
