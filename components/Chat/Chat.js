@@ -1,6 +1,7 @@
 import { PlusCircleFilled } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import chatService from "../../services/messaging/chat.service";
 import ChooseReciever from "./ChooseReciever";
 
 export default function Chat() {
@@ -326,6 +327,11 @@ export default function Chat() {
       setCurrentChatId(chat.receiver.id);
     }
   }, [compose]);
+
+  useEffect(() => {
+    const res = chatService.getParentMessagesEmpl();
+    console.log(res);
+  }, []);
 
   return (
     <div className="container-fluid position-relative">
