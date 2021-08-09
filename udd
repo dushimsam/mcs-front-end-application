@@ -1,0 +1,55 @@
+[
+    {
+        "id": 1,
+        "messageType": "TEXT",
+        "message": "Bite mubyeyi",
+        "messageDirection": "FORWARD",
+        "messageStatus": "PARTICULAR",
+        "sender": {
+            "id": 3,
+            "firstName": "Rurira",
+            "lastName": "Aumari",
+            "phone": "0789820820",
+            "profile": "htttp:...",
+            "userName": "aumari",
+            "gender": "male",
+            "email": "aumari@gmail.com",
+            "isLocked": false,
+            "isConfirmed": false,
+            "category": "SCHOOL_EMPLOYEE",
+            "createdAt": "2021-08-05T11:51:57.330+00:00",
+            "lastModifiedAt": "2021-08-05T11:51:57.330+00:00"
+        },
+        "createdAt": "2021-08-06T12:44:26.353+00:00",
+        "lastModifiedAt": "2021-08-06T12:44:26.353+00:00"
+    },
+    {
+        "id": 2,
+        "messageType": "TEXT",
+        "message": "Amakuru yanyu babyeyi beza",
+        "messageDirection": "FORWARD",
+        "messageStatus": "ALL",
+        "sender": {
+            "id": 3,
+            "firstName": "Rurira",
+            "lastName": "Aumari",
+            "phone": "0789820820",
+            "profile": "htttp:...",
+            "userName": "aumari",
+            "gender": "male",
+            "email": "aumari@gmail.com",
+            "isLocked": false,
+            "isConfirmed": false,
+            "category": "SCHOOL_EMPLOYEE",
+            "createdAt": "2021-08-05T11:51:57.330+00:00",
+            "lastModifiedAt": "2021-08-05T11:51:57.330+00:00"
+        },
+        "createdAt": "2021-08-06T12:50:01.060+00:00",
+        "lastModifiedAt": "2021-08-06T12:50:01.060+00:00"
+    }
+]
+
+
+
+
+{}

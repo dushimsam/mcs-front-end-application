@@ -233,6 +233,9 @@ export default function Chat() {
     },
   ]);
 
+  const [userChats, setUserChats] = useState([]);
+  const [chatsRetrived, setChatsRetrived] = useState(false);
+
   const [message, setMessage] = useState("");
 
   const [currentChatId, setCurrentChatId] = useState("221a");
@@ -328,10 +331,28 @@ export default function Chat() {
     }
   }, [compose]);
 
+  const getChats = async () => {
+    const res = chatService.getUserSentMessages(authUser.id);
+    res.then((data) => {
+      data.data.map((msg) =>
+        chatService
+          .getParentMessageReceiver(msg.id)
+          .then((d) => setUserChats(userChats.concat(d.data)))
+      );
+    });
+    setChatsRetrived(true);
+  };
+
+  console.log(userChats);
+
   useEffect(() => {
-    const res = chatService.getParentMessagesEmpl();
-    console.log(res);
-  }, []);
+    // testGet();
+    if (authUser) {
+      if (authUser.id && !chatsRetrived) {
+        getChats();
+      }
+    }
+  }, [authUser]);
 
   return (
     <div className="container-fluid position-relative">
