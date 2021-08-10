@@ -1,4 +1,3 @@
-import { PlusCircleFilled } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import chatService from "../../services/messaging/chat.service";
@@ -200,8 +199,10 @@ export default function Chat({ type }) {
           toAll={toAll}
           toOneOrMany={toOneOrMany}
           setCurrentChatId={setCurrentChatId}
+          currentChatId={currentChatId}
           messages={messages}
           chats={chats}
+          type={type}
         />
         {/* <!-- Chat Box--> */}
         {showMsg && messages.length > 0 ? (

@@ -1,34 +1,40 @@
+import { PlusCircleFilled } from "@ant-design/icons";
+
 export default function ChatSidebar({
   showOptions,
   setShowOptions,
   toAll,
   toOneOrMany,
   setCurrentChatId,
+  currentChatId,
   messages,
   chats,
+  type,
 }) {
   return (
     <div className="col-4 px-0 position-relative">
       <div className="bg-white position-fixed chat-sidebar">
-        <div
-          className="new-chat-option position-fixed shadow py-3"
-          hidden={showOptions}
-        >
+        {type === "employee" && (
           <div
-            className="chat-option px-4 py-2 add-border"
-            onClick={toOneOrMany}
+            className="new-chat-option position-fixed shadow py-3"
+            hidden={showOptions}
           >
-            One or Many Parent(s)
-          </div>
-          <div className="chat-option px-4 pt-2" onClick={toAll}>
-            <a
-              href="#general"
-              style={{ textDecoration: "none", color: "#000000" }}
+            <div
+              className="chat-option px-4 py-2 add-border"
+              onClick={toOneOrMany}
             >
-              All Parents
-            </a>
+              One or Many Parent(s)
+            </div>
+            <div className="chat-option px-4 pt-2" onClick={toAll}>
+              <a
+                href="#general"
+                style={{ textDecoration: "none", color: "#000000" }}
+              >
+                All Parents
+              </a>
+            </div>
           </div>
-        </div>
+        )}
         <PlusCircleFilled
           className="position-fixed new-message-btn"
           onClick={() => setShowOptions(!showOptions)}
@@ -41,30 +47,32 @@ export default function ChatSidebar({
         <div className="messages-box">
           <div className="list-group rounded-0">
             {/* ALL part */}
-            <div
-              id="general"
-              className={`list-group-item list-group-item-action list-group-item-light rounded-0 ${
-                currentChatId === "all" ? "active" : null
-              }`}
-              key="all"
-              onClick={() => setCurrentChatId("all")}
-            >
-              <div className="media">
-                <img
-                  src="/images/user.jpg"
-                  alt="user"
-                  width="50"
-                  height="50"
-                  className="rounded-circle"
-                />
-                <div className="media-body ml-4">
-                  <div className="d-flex align-items-center justify-content-between mb-1">
-                    <h6 className="mb-0 user-name">All Parents</h6>
-                    To all
+            {type === "employee" && (
+              <div
+                id="general"
+                className={`list-group-item list-group-item-action list-group-item-light rounded-0 ${
+                  currentChatId === "all" ? "active" : null
+                }`}
+                key="all"
+                onClick={() => setCurrentChatId("all")}
+              >
+                <div className="media">
+                  <img
+                    src="/images/user.jpg"
+                    alt="user"
+                    width="50"
+                    height="50"
+                    className="rounded-circle"
+                  />
+                  <div className="media-body ml-4">
+                    <div className="d-flex align-items-center justify-content-between mb-1">
+                      <h6 className="mb-0 user-name">All Parents</h6>
+                      To all
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
             {/* ALL part end */}
             {messages.length !== 0 ? (
               chats.map((chat) => (
