@@ -6,21 +6,21 @@ import EmployeeDashboard from "../../components/dashboards/EmployeeDashboard";
 import { app_info } from "../../utils/constants";
 
 function TableLayout({
-                         Page,
-                         name,
-                         showFilter,
-                         hideSearch,
-                         isOrder,
-                         hideAction,
-                         route,
-                         count,
-                         isArray,
-                         setSearch,
-                         setFilter,
-                         filters,
-                         status,
-                         panes
-                     }) {
+    Page,
+    name,
+    showFilter,
+    hideSearch,
+    isOrder,
+    hideAction,
+    route,
+    count,
+    isArray,
+    setSearch,
+    setFilter,
+    filters,
+    status,
+    panes
+}) {
 
     const [value, setValue] = useState("");
 
@@ -32,12 +32,12 @@ function TableLayout({
         // e.preventDefault();
         setSearch(value);
     };
-    
+
 
     const handleKeypress = e => {
 
-    // document.getElementById("myBtn").click();
-        if (e.key==="Enter") {
+        // document.getElementById("myBtn").click();
+        if (e.key === "Enter") {
             handleSubmit();
         }
     };
@@ -51,14 +51,14 @@ function TableLayout({
             <div className={"row"}>
                 {!isArray ? (
                     <div className="col-6 col-md-3">
-                        <Badge text={name} value={count} link={`${route}`} col1={"col-8"} col2={"col-4"}/>
+                        <Badge text={name} value={count} link={`${route}`} col1={"col-8"} col2={"col-4"} />
                     </div>
                 ) : (
                     <React.Fragment>
                         {panes.map((pane) => (
                             <div className="col-6 col-md-3">
                                 <Badge text={pane.name} active={(pane.name === name)} small={true} value={pane.count}
-                                       link={`${pane.route}`} col1={"col-8"} col2={"col-4"}/>
+                                    link={`${pane.route}`} col1={"col-8"} col2={"col-4"} />
                             </div>
                         ))}
                     </React.Fragment>
@@ -73,10 +73,10 @@ function TableLayout({
                             <div className={(isOrder) ? 'col-8' : "col-5"}>
                                 <div className={'mb-3'}>
                                     <span className="mr-4"
-                                          style={{fontSize: '0.9em', color: '#707070', textDecoration: 'underline'}}>Filter by</span>
+                                        style={{ fontSize: '0.9em', color: '#707070', textDecoration: 'underline' }}>Filter by</span>
                                     {filters.map((filter) => (
                                         <FilterButton name={filter.name} val={filter.val}
-                                                      vals={(filter.vals) ? filter.vals : null} setFilter={setFilter}/>
+                                            vals={(filter.vals) ? filter.vals : null} setFilter={setFilter} />
                                     ))}
                                 </div>
                             </div>
@@ -84,25 +84,25 @@ function TableLayout({
                         <div className={(isOrder) ? 'col-3' : "col-4"}>
                             {(status == "new" && !hideSearch) ?
                                 <React.Fragment>
-                                    <svg xmlns="http://www.w3.org/2000/svg"  id="searchBtn" onClick={handleSubmit} viewBox="0 0 24 24"
-                                         width="24" style={styles.searchIcon} height="24">
-                                        <path fill="none" d="M0 0h24v24H0z"/>
+                                    <svg xmlns="http://www.w3.org/2000/svg" id="searchBtn" onClick={handleSubmit} viewBox="0 0 24 24"
+                                        width="24" style={styles.searchIcon} height="24">
+                                        <path fill="none" d="M0 0h24v24H0z" />
                                         <path
-                                            d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"/>
+                                            d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z" />
                                     </svg>
                                     <input className={'form-control ' + (isOrder) ? 'col-12' : "col-9"}
-                                           style={styles.formControl}
-                                           value={value}
-                                           onChange={handleChange}
-                                           onKeyPress={handleKeypress}
-                                           placeholder={'Search'}/>
+                                        style={styles.formControl}
+                                        value={value}
+                                        onChange={handleChange}
+                                        onKeyPress={handleKeypress}
+                                        placeholder={'Search'} />
                                 </React.Fragment> : ""
                             }
                         </div>
                         {!hideAction ? (
-                                <div className={status === "new" ? "col-3" : "col-6"}>
-                                    <AdminTableTitle isSalesManager={true} name={name} route={route} status={status}/>
-                                </div>) :
+                            <div className={status === "new" ? "col-3" : "col-6"}>
+                                <AdminTableTitle isSalesManager={true} name={name} route={route} status={status} />
+                            </div>) :
                             null
                         }
                     </div>
@@ -115,7 +115,7 @@ function TableLayout({
     )
 }
 
-const FilterButton = ({name, val, vals, setFilter}) => {
+const FilterButton = ({ name, val, vals, setFilter }) => {
     return (
         <React.Fragment>
             <button style={styles.button} onClick={() => {
@@ -127,39 +127,39 @@ const FilterButton = ({name, val, vals, setFilter}) => {
     )
 }
 export default function SingleSubModuleLayout({
-                                                  Content,
-                                                  isOrder,
-                                                  name,
-                                                  route,
-                                                  count,
-                                                  filters,
-                                                  status,
-                                                  setFilter,
-                                                  setSearch,
-                                                  showFilter,
-                                                  hideAction,
-                                                  hideSearch,
-                                                  panes,
-                                                  isArray
-                                              }) {
+    Content,
+    isOrder,
+    name,
+    route,
+    count,
+    filters,
+    status,
+    setFilter,
+    setSearch,
+    showFilter,
+    hideAction,
+    hideSearch,
+    panes,
+    isArray
+}) {
     const DEFAULT_FILTERS = [
-        {name: 'All', val: 'ALL'},
-        {name: 'Active', val: 'ACTIVE'},
-        {name: 'In active', val: 'INACTIVE'},
+        { name: 'All', val: 'ALL' },
+        { name: 'Active', val: 'ACTIVE' },
+        { name: 'In active', val: 'INACTIVE' },
     ];
 
     if (isArray) return (
         <EmployeeDashboard>
             <TableLayout Page={Content} isOrder={isOrder} filters={(filters) ? filters : DEFAULT_FILTERS} name={name}
-                         hideAction={hideAction} isArray={true} hideSearch={hideSearch} panes={panes} route={route}
-                         showFilter={showFilter} setSearch={setSearch} setFilter={setFilter} status={status}/>
+                hideAction={hideAction} isArray={true} hideSearch={hideSearch} panes={panes} route={route}
+                showFilter={showFilter} setSearch={setSearch} setFilter={setFilter} status={status} />
         </EmployeeDashboard>
     )
     return (
         <EmployeeDashboard>
             <TableLayout Page={Content} name={name} isOrder={isOrder} filters={(filters) ? filters : DEFAULT_FILTERS}
-                         showFilter={showFilter} hideAction={hideAction} hideSearch={hideSearch} route={route}
-                         count={count} setSearch={setSearch} setFilter={setFilter} status={status}/>
+                showFilter={showFilter} hideAction={hideAction} hideSearch={hideSearch} route={route}
+                count={count} setSearch={setSearch} setFilter={setFilter} status={status} />
         </EmployeeDashboard>
     )
 }

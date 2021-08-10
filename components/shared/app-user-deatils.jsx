@@ -5,11 +5,11 @@ import { notifySuccess, notifyError } from "../../utils/alerts"
 import $ from "jquery"
 import globalStyles from "../../styles/global-colors.module.css"
 import { dateFormat } from "../../utils/functions"
+import StudentTable from "./parents/students-table"
+import parentService from "../../services/users/parent-service"
 
 export const AppUserProfile = ({ UserObj, category, item }) => {
     const [loading, setLoading] = useState(false)
-
-    const [isUser, setIsUser] = useState(false);
 
     const checkIsUser = (isUser) => {
         if (isUser)
@@ -60,28 +60,28 @@ export const AppUserProfile = ({ UserObj, category, item }) => {
 
                                 <img
                                     id={"imageContainer"}
-                                    src={UserObj?.profile}
+                                    src={item.user.profile}
                                     className="rounded-circle shadow-sm" width="100"
                                     onError={(e) => {
                                         e.target.onerror = null;
                                         e.target.src =
                                             "https://ui-avatars.com/api/?name=" +
-                                            UserObj.username;
+                                            item.user.username;
                                     }}
-                                    alt={UserObj.username}
-                                    title={UserObj.username}
+                                    alt={item.user.username}
+                                    title={item.user.username}
                                 />
 
                                 <div className="mt-3">
-                                    <h4>{`${UserObj.firstName} ${UserObj.lastName}`}</h4>
+                                    <h4>{`${item.user.firstName} ${item.user.lastName}`}</h4>
                                     <p className="text-secondary mb-1">{category}</p>
-                                    <p className="text-muted font-size-sm">{dateFormat(UserObj.createdAt).onlyDate()}</p>
+                                    <p className="text-muted font-size-sm">{dateFormat(item.user.createdAt).onlyDate()}</p>
                                     {/* <button className="btn btn-outline-primary">Message</button> */}
                                     <button className={"btn text-white btn-danger"}
                                         onClick={() => {
                                             showModal();
                                         }} data-toggle="modal" data-target="#userConfirmationModal"
-                                        disabled={UserObj.category !== "SCHOOL_ADMIN"}>
+                                        disabled={item.user.category !== "SCHOOL_ADMIN"}>
 
                                         {loading ?
                                             (<img
@@ -106,25 +106,25 @@ export const AppUserProfile = ({ UserObj, category, item }) => {
                                         <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                             <h6 className="mb-0">Full Names</h6>
                                             <span
-                                                className="text-secondary">{`${UserObj.firstName} ${UserObj.lastName}`}</span>
+                                                className="text-secondary">{`${item.user.firstName} ${item.user.lastName}`}</span>
                                         </li>
                                         <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                             <h6 className="mb-0">Email</h6>
-                                            <span className="text-secondary">{`${UserObj.email}`}</span>
+                                            <span className="text-secondary">{`${item.user.email}`}</span>
                                         </li>
                                         <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                             <h6 className="mb-0">Telephone</h6>
-                                            <span className="text-secondary">{`${UserObj.phone}`}</span>
+                                            <span className="text-secondary">{`${item.user.phone}`}</span>
                                         </li>
 
                                         <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                             <h6 className="mb-0">Gender</h6>
-                                            <span className="text-secondary">{`${UserObj.gender}`}</span>
+                                            <span className="text-secondary">{`${item.user.gender}`}</span>
                                         </li>
 
                                         <li className={"list-group-item d-flex justify-content-between align-items-center flex-wrap text-white"}>
                                             <h6 className="mb-0">STATUS</h6>
-                                            <span className="text-white">{UserObj.isLocked}</span>
+                                            <span className="text-white">{item.user.isLocked}</span>
                                         </li>
 
                                     </ul>
@@ -135,6 +135,16 @@ export const AppUserProfile = ({ UserObj, category, item }) => {
                         </div>
 
                     </div>
+                    {
+                        category === "PARENT" &&
+                        <div className="row justify-content-center mt-3">
+                            <div className="col-11">
+                                <h5 className="mb-3">Parent's students </h5>
+                                <StudentTable students={item.students} />
+                            </div>
+                        </div>
+                    }
+
                 </div>
             </div>
             {/* <CheckUserModal  callFn={deactivateUser} loading={loading} setLoading={setLoading}/>  */}
@@ -147,9 +157,6 @@ export const AppUserProfile = ({ UserObj, category, item }) => {
 
 const ModalProfileDetails = ({ item, category }) => {
     const [UserObj, setUserObj] = useState("")
-    useEffect(() => {
-        setUserObj(item.user)
-    }, [item])
 
     return (
         <div className="modal fade bd-example-modal-lg" id="profileModalDetails" tabIndex="-1" role="dialog"

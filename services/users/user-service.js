@@ -41,6 +41,10 @@ class UserService {
         return http.put(`/users/${id}`, data)
     }
 
+    toggleConfirm(id){
+        return http.put(`/users/toggle-confirm/${id}`)
+    }
+
     toggleDisable(id) {
         return http.put(`/users/toggle-disable/${id}`)
     }

@@ -1,12 +1,17 @@
 import axios from "axios";
+// export const domain = "https://mcs-backend-system.herokuapp.com";
 export const domain = "http://localhost:4600";
-import AuthService from './auth/auth.service'
 
+
+
+export const baseUrl = `${domain}/api/v1`
 
 const http = axios.create({
-  baseURL: `${domain}/api/v1`,
+  baseURL: baseUrl,
   headers: { 'Content-Type': 'application/json' },
 });
+
+
 
 // http.interceptors.request.use(
 //   function (config) {
