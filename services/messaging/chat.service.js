@@ -15,7 +15,9 @@ class ChatService {
       `/parent-message-receivers/parent-message/${parentMessageId}`
     );
   }
-  postMessageEmpl() {}
+  sendMessage(parentMessageDtoPost) {
+    return http.post("/parent-messages", parentMessageDtoPost);
+  }
 }
 
 export default new ChatService();

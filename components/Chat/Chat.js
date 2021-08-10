@@ -2,17 +2,27 @@ import { PlusCircleFilled } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import chatService from "../../services/messaging/chat.service";
+import parentService from "../../services/users/parent-service";
 import ChooseReciever from "./ChooseReciever";
 import Data from "./data.json";
+import TypingArea from "./TypingArea";
 
 export default function Chat() {
-  // const authUser = useSelector((state) => state.authUser);
-  const [messages, setMessages] = useState([...Data]);
+  const authUser = useSelector((state) => state.authUser);
+  const [messages, setMessages] = useState([]);
+  const [toAllMessages, setToAllMessages] = useState([]);
   const [chats, setChats] = useState([]);
+  const [getChats, setGetChats] = useState(true);
   const [currentChatId, setCurrentChatId] = useState("");
   const [currentChat, setCurrentChat] = useState(undefined);
 
   const [message, setMessage] = useState("");
+  const [newMessageStatus, setNewMessageStatus] = useState("PARTICULAR");
+  const [compose, setCompose] = useState(false);
+  const [receivers, setReceivers] = useState([]);
+  const [parents, setParents] = useState([]);
+
+  const [searchResults, setSearchResults] = useState(null);
 
   const [showMsg, setShowMsg] = useState(true);
   const [showOptions, setShowOptions] = useState(true);
@@ -47,33 +57,144 @@ export default function Chat() {
       });
     });
 
-    setChats(newChatsUnique);
-    setCurrentChatId(newChatsUnique[0].receiver.id);
-    setCurrentChat(newChatsUnique[0]);
+    if (newChatsUnique.length > 0) {
+      setChats(newChatsUnique);
+      if (currentChatId === "") {
+        setCurrentChatId(newChatsUnique[0].receiver.id);
+        setCurrentChat(newChatsUnique[0]);
+      }
+    }
   };
 
-  const toOneOrMany = () => {};
-  const toAll = () => {};
+  const toOneOrMany = () => {
+    setNewMessageStatus("PARTICULAR");
+    setShowMsg(false);
+    setShowOptions(true);
+  };
+  const toAll = () => {
+    setNewMessageStatus("ALL");
+    setCurrentChatId("all");
+    setShowMsg(true);
+    setShowOptions(true);
+  };
 
   const filterMessages = () => {
-    let temp = [...chats];
-    temp = temp.filter((c) => c.receiver.id === currentChatId);
-    setCurrentChat(temp[0]);
+    if (currentChatId !== "all") {
+      let temp = [...chats];
+      temp = temp.filter((c) => c.receiver.id === currentChatId);
+      setCurrentChat(temp[0]);
+    } else {
+      console.log(toAllMessages);
+    }
   };
 
-  const composeMessage = (e) => {
+  const composeMessage = async (e, msg, receiverId) => {
     e.preventDefault();
     /* Send Message */
-    console.log("Send message");
+    let newMessage = {
+      user_senderId: authUser.id,
+      message: msg,
+      messageDirection: authUser.category === "PARENT" ? "REVERSE" : "FORWARD",
+      messageStatus: currentChatId === "all" ? "ALL" : "PARTICULAR",
+    };
+
+    // if (newMessageStatus === "PARTICULAR" && currentChatId !== "all") {
+    //   newMessage.user_receiverId = currentChatId;
+    // }
+
+    if (receiverId !== "all") newMessage.user_receiverId = receiverId;
+
+    await chatService
+      .sendMessage(newMessage)
+      .then(async (res) => {
+        if (currentChatId === "all")
+          setToAllMessages(toAllMessages.concat(res.data));
+        else {
+          await chatService
+            .getParentMessageReceiver(res.data.id)
+            .then((result) => {
+              setMessages(messages.concat(result.data));
+            })
+            .catch((err) => console.log(err));
+        }
+      })
+      .catch((err) => console.log(err));
+
+    setMessage("");
+  };
+
+  const addReciever = (index, pId) => {
+    let temp = [...receivers];
+    let pIndex = receivers.findIndex((r) => r.id === pId);
+    if (pIndex > -1) return;
+    temp.push(parents[index]);
+    setReceivers(temp);
+  };
+
+  const removeReceiver = (pId) => {
+    let temp = [...receivers];
+    temp = temp.filter((p) => p.id !== pId);
+    setReceivers(temp);
+  };
+
+  const searchParent = (search) => {
+    if (search !== " " && search !== "") {
+      let temp = [...parents];
+      let term = search.toLowerCase();
+      let results = temp.filter(
+        (p) =>
+          p.firstName.toLowerCase().startsWith(term) ||
+          p.lastName.toLowerCase().startsWith(term)
+      );
+      setSearchResults(results);
+    } else setSearchResults(null);
+  };
+
+  const retriveChats = async () => {
+    let result1;
+    let userChats = [];
+    let to_all = [];
+    await chatService.getParentMessages().then((data) => (result1 = data.data));
+    for (let i = 0; i < result1.length; i++) {
+      if (result1[i].messageStatus === "ALL") {
+        to_all.push(result1[i]);
+      } else {
+        await chatService
+          .getParentMessageReceiver(result1[i].id)
+          .then((data) => {
+            data.data.map((d) => userChats.push(d));
+          });
+      }
+    }
+    setMessages(userChats);
+    setGetChats(false);
+    setToAllMessages(to_all);
+  };
+
+  const getParents = () => {
+    parentService.getAll().then((data) => {
+      let all_parents = [];
+      data.data.map((d) => all_parents.push(d.user));
+      setParents(all_parents);
+    });
   };
 
   useEffect(() => {
-    makeChats();
+    // makeChats();
+    if (getChats) {
+      retriveChats();
+    }
+
+    getParents();
   }, []);
 
   useEffect(() => {
     filterMessages();
   }, [currentChatId]);
+
+  useEffect(() => {
+    makeChats();
+  }, [messages]);
 
   return (
     <div className="container-fluid position-relative">
@@ -92,7 +213,12 @@ export default function Chat() {
                 One or Many Parent(s)
               </div>
               <div className="chat-option px-4 pt-2" onClick={toAll}>
-                All Parents
+                <a
+                  href="#general"
+                  style={{ textDecoration: "none", color: "#000000" }}
+                >
+                  All Parents
+                </a>
               </div>
             </div>
             <PlusCircleFilled
@@ -106,54 +232,109 @@ export default function Chat() {
 
             <div className="messages-box">
               <div className="list-group rounded-0">
-                {chats.map((chat) => (
-                  <div
-                    className={`list-group-item list-group-item-action list-group-item-light rounded-0 ${
-                      currentChatId === chat.receiver.id ? "active" : null
-                    }`}
-                    key={chat.receiver.id}
-                    onClick={() => setCurrentChatId(chat.receiver.id)}
-                  >
-                    <div className="media">
-                      <img
-                        src="/images/user.jpg"
-                        alt="user"
-                        width="50"
-                        height="50"
-                        className="rounded-circle"
-                      />
-                      <div className="media-body ml-4">
-                        <div className="d-flex align-items-center justify-content-between mb-1">
-                          <h6 className="mb-0 user-name">
-                            {chat.receiver.firstName} {chat.receiver.lastName}
-                          </h6>
-                          {chat.messages.length !== 0 && (
-                            <small className="small font-weight-bold">
-                              {chat.messages[0].lastModifiedAt[2]}{" "}
-                              {chat.messages[0].lastModifiedAt[1]}
-                            </small>
-                          )}
-                        </div>
-                        <p className="font-sm mb-0 text-small">
-                          {chat.messages.length !== 0 &&
-                            chat.messages[0].message}
-                        </p>
+                {/* ALL part */}
+                <div
+                  id="general"
+                  className={`list-group-item list-group-item-action list-group-item-light rounded-0 ${
+                    currentChatId === "all" ? "active" : null
+                  }`}
+                  key="all"
+                  onClick={() => setCurrentChatId("all")}
+                >
+                  <div className="media">
+                    <img
+                      src="/images/user.jpg"
+                      alt="user"
+                      width="50"
+                      height="50"
+                      className="rounded-circle"
+                    />
+                    <div className="media-body ml-4">
+                      <div className="d-flex align-items-center justify-content-between mb-1">
+                        <h6 className="mb-0 user-name">All Parents</h6>
+                        {/* {chat.messages.length !== 0 && (
+                                <small className="small font-weight-bold">
+                                  {chat.messages[0].lastModifiedAt[2]}{" "}
+                                  {chat.messages[0].lastModifiedAt[1]}
+                                </small>
+                              )} */}
+                        To all
                       </div>
+                      <p className="font-sm mb-0 text-small">
+                        {/* {chat.messages.length !== 0 &&
+                          chat.messages[chat.messages.length - 1].message} */}
+                      </p>
                     </div>
                   </div>
-                ))}
+                </div>
+                {/* ALL part end */}
+                {messages.length !== 0 ? (
+                  chats.map((chat) => (
+                    <div
+                      className={`list-group-item list-group-item-action list-group-item-light rounded-0 ${
+                        currentChatId === chat.receiver.id ? "active" : null
+                      }`}
+                      key={chat.receiver.id}
+                      onClick={() => setCurrentChatId(chat.receiver.id)}
+                    >
+                      <div className="media">
+                        <img
+                          src="/images/user.jpg"
+                          alt="user"
+                          width="50"
+                          height="50"
+                          className="rounded-circle"
+                        />
+                        <div className="media-body ml-4">
+                          <div className="d-flex align-items-center justify-content-between mb-1">
+                            <h6 className="mb-0 user-name">
+                              {chat.receiver.firstName} {chat.receiver.lastName}
+                            </h6>
+                            {chat.messages.length !== 0 && (
+                              <small className="small font-weight-bold">
+                                {chat.messages[0].lastModifiedAt[2]}{" "}
+                                {chat.messages[0].lastModifiedAt[1]}
+                              </small>
+                            )}
+                          </div>
+                          <p className="font-sm mb-0 text-small">
+                            {chat.messages.length !== 0 &&
+                              chat.messages[chat.messages.length - 1].message}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center mt-4">
+                    All the receivers will appear here
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
         {/* <!-- Chat Box--> */}
-        {showMsg ? (
+        {showMsg && messages.length > 0 ? (
           <div className="col-8 px-0 chat-box">
             <div
               className="pr-4 py-5 content bg-white"
               style={{ height: "100vh" }}
             >
-              {chats.length !== 0 && currentChat ? (
+              {currentChatId === "all" ? (
+                toAllMessages.length > 0 &&
+                toAllMessages.map((msg, index) => (
+                  <div className="media w-50 mb-3 ml-auto" key={index}>
+                    <div className="media-body ml-3">
+                      <div className="rounded py-2 px-3 mb-2 bg-light">
+                        <p className="text-small mb-0 text-muted">
+                          {msg.message}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : chats.length !== 0 && currentChat ? (
                 currentChat.messages.length !== 0 ? (
                   currentChat.messages.map((msg, index) => (
                     <div
@@ -208,46 +389,24 @@ export default function Chat() {
             </div>
 
             {/* <!-- Typing area --> */}
-            <form
-              action="#"
-              className="bg-light position-fixed type-message"
-              // onKeyDown={composeMessage}
-            >
-              <div className="input-group">
-                <input
-                  type="text"
-                  placeholder="Type a message"
-                  aria-describedby="button-addon2"
-                  className="form-control rounded-0 border-0 py-4 bg-light pl-4"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                />
-                <div className="input-group-append pr-2">
-                  <button
-                    id="button-addon2"
-                    type="submit"
-                    className="btn btn-link"
-                    // onClick={composeMessage}
-                  >
-                    {" "}
-                    <i className="fa fa-paper-plane"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
+            <TypingArea
+              message={message}
+              setMessage={setMessage}
+              composeMessage={composeMessage}
+              receiverId={currentChatId}
+            />
           </div>
         ) : (
-          <div>Choose</div>
-          // <ChooseReciever
-          //   parents={parents}
-          //   receivers={receivers}
-          //   addReciever={addReciever}
-          //   removeReceiver={removeReceiver}
-          //   searchParent={searchParent}
-          //   searchResults={searchResults}
-          //   setCompose={setCompose}
-          //   setShowMsg={setShowMsg}
-          // />
+          <ChooseReciever
+            parents={parents}
+            receivers={receivers}
+            addReciever={addReciever}
+            removeReceiver={removeReceiver}
+            searchParent={searchParent}
+            searchResults={searchResults}
+            setCompose={setCompose}
+            setShowMsg={setShowMsg}
+          />
         )}
       </div>
     </div>

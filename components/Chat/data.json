@@ -52,7 +52,7 @@
       "messageType": "TEXT",
       "message": "Amakuru yanyu babyeyi beza",
       "messageDirection": "FORWARD",
-      "messageStatus": "ALL",
+      "messageStatus": "PARTICULAR",
       "sender": {
         "id": 3,
         "firstName": "Rurira",
@@ -97,7 +97,7 @@
       "messageType": "TEXT",
       "message": "Amakuru yanyu babyeyi beza",
       "messageDirection": "FORWARD",
-      "messageStatus": "ALL",
+      "messageStatus": "PARTICULAR",
       "sender": {
         "id": 3,
         "firstName": "Rurira",
@@ -142,7 +142,7 @@
       "messageType": "TEXT",
       "message": "Amakuru yanyu babyeyi beza",
       "messageDirection": "FORWARD",
-      "messageStatus": "ALL",
+      "messageStatus": "PARTICULAR",
       "sender": {
         "id": 3,
         "firstName": "Rurira",
