@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const QuickActions = () => {
   return (
-    <Link href={"/employee/chat"} passHref>
+    <Link href={"/chat"} passHref>
       <button
         className="btn btn-sm d-none d-sm-block pr-3"
         type="button"

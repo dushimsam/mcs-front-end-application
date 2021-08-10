@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import chatService from "../../services/messaging/chat.service";
 import parentService from "../../services/users/parent-service";
+import schoolEmployeeService from "../../services/users/school-employee-service";
 import ChatSidebar from "./ChatSidebar";
 import ChooseReciever from "./ChooseReciever";
 import Message from "./Message";
 import TypingArea from "./TypingArea";
 
-export default function Chat({ type }) {
+export default function Chat() {
   const authUser = useSelector((state) => state.authUser);
   const [messages, setMessages] = useState([]);
   const [toAllMessages, setToAllMessages] = useState([]);
@@ -18,7 +19,9 @@ export default function Chat({ type }) {
 
   const [message, setMessage] = useState("");
   const [receivers, setReceivers] = useState([]);
-  const [parents, setParents] = useState([]);
+  // const [parent, setParent]
+  // const [employees, setEmployees] = useState([]);
+  const [receivingUsers, setReceivingUsers] = useState([]);
 
   const [searchResults, setSearchResults] = useState(null);
 
@@ -122,7 +125,7 @@ export default function Chat({ type }) {
     let temp = [...receivers];
     let pIndex = receivers.findIndex((r) => r.id === pId);
     if (pIndex > -1) return;
-    temp.push(parents[index]);
+    temp.push(receivingUsers[index]);
     setReceivers(temp);
   };
 
@@ -132,9 +135,9 @@ export default function Chat({ type }) {
     setReceivers(temp);
   };
 
-  const searchParent = (search) => {
+  const searchUser = (search) => {
     if (search !== " " && search !== "") {
-      let temp = [...parents];
+      let temp = [...receivingUsers];
       let term = search.toLowerCase();
       let results = temp.filter(
         (p) =>
@@ -149,7 +152,9 @@ export default function Chat({ type }) {
     let result1;
     let userChats = [];
     let to_all = [];
-    await chatService.getParentMessages().then((data) => (result1 = data.data));
+    await chatService
+      .getUserSentMessages(authUser.id)
+      .then((data) => (result1 = data.data));
     for (let i = 0; i < result1.length; i++) {
       if (result1[i].messageStatus === "ALL") {
         to_all.push(result1[i]);
@@ -170,16 +175,35 @@ export default function Chat({ type }) {
     parentService.getAll().then((data) => {
       let all_parents = [];
       data.data.map((d) => all_parents.push(d.user));
-      setParents(all_parents);
+      // setParents(all_parents);
+      setReceivingUsers(all_parents);
     });
   };
 
+  const getEmployees = () => {
+    schoolEmployeeService.getSchoolEmployees().then((data) => {
+      console.log(data);
+      let all_employees = [];
+      data.data.map((d) => all_employees.push(d.user));
+      // setEmployees(all_employees);
+      setReceivingUsers(all_employees);
+    });
+    setReceivingUsers([]);
+  };
+
   useEffect(() => {
-    if (getChats) {
+    if (getChats && authUser.id) {
       retriveChats();
+      if (authUser.category === "PARENT") {
+        getEmployees();
+      } else if (
+        authUser.category === "SCHOOL_ADMIN" ||
+        authUser.category === "SCHOOL_EMPLOYEE"
+      ) {
+        getParents();
+      }
     }
-    getParents();
-  }, []);
+  }, [authUser]);
 
   useEffect(() => {
     filterMessages();
@@ -202,7 +226,8 @@ export default function Chat({ type }) {
           currentChatId={currentChatId}
           messages={messages}
           chats={chats}
-          type={type}
+          type={authUser.category}
+          setShowMsg={setShowMsg}
         />
         {/* <!-- Chat Box--> */}
         {showMsg && messages.length > 0 ? (
@@ -249,11 +274,11 @@ export default function Chat({ type }) {
           </div>
         ) : (
           <ChooseReciever
-            parents={parents}
+            receivingUsers={receivingUsers}
             receivers={receivers}
             addReciever={addReciever}
             removeReceiver={removeReceiver}
-            searchParent={searchParent}
+            searchUser={searchUser}
             searchResults={searchResults}
             setShowMsg={setShowMsg}
             composeMessage={composeMessage}

@@ -10,11 +10,12 @@ export default function ChatSidebar({
   messages,
   chats,
   type,
+  setShowMsg,
 }) {
   return (
     <div className="col-4 px-0 position-relative">
       <div className="bg-white position-fixed chat-sidebar">
-        {type === "employee" && (
+        {type !== "PARENT" && (
           <div
             className="new-chat-option position-fixed shadow py-3"
             hidden={showOptions}
@@ -37,7 +38,9 @@ export default function ChatSidebar({
         )}
         <PlusCircleFilled
           className="position-fixed new-message-btn"
-          onClick={() => setShowOptions(!showOptions)}
+          onClick={() =>
+            type !== "PARENT" ? setShowOptions(!showOptions) : setShowMsg(false)
+          }
         />
         {/* </div> */}
         <div className="bg-gray px-4 py-2 bg-light">
@@ -47,7 +50,7 @@ export default function ChatSidebar({
         <div className="messages-box">
           <div className="list-group rounded-0">
             {/* ALL part */}
-            {type === "employee" && (
+            {type !== "PARENT" && (
               <div
                 id="general"
                 className={`list-group-item list-group-item-action list-group-item-light rounded-0 ${

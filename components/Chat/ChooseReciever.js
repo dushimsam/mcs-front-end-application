@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import TypingArea from "./TypingArea";
 
 export default function ChooseReciever({
-  parents,
+  receivingUsers,
   receivers,
   addReciever,
   removeReceiver,
-  searchParent,
+  searchUser,
   searchResults,
   setShowMsg,
   composeMessage,
@@ -30,7 +30,7 @@ export default function ChooseReciever({
   };
 
   useEffect(() => {
-    searchParent(search);
+    searchUser(search);
   }, [search]);
 
   return (
@@ -68,8 +68,8 @@ export default function ChooseReciever({
           </div>
           {searchResults === null ? (
             <div className="mt-5 d-flex flex-column">
-              {parents.map((parent, index) => (
-                <div className="d-flex mt-3" key={parent.id}>
+              {receivingUsers.map((user, index) => (
+                <div className="d-flex mt-3" key={user.id}>
                   <img
                     src="/images/user.jpg"
                     alt="user"
@@ -79,9 +79,9 @@ export default function ChooseReciever({
                   />
                   <div
                     className="name mt-1 ml-3"
-                    onClick={() => addReciever(index, parent.id)}
+                    onClick={() => addReciever(index, user.id)}
                   >
-                    {parent.firstName} {parent.lastName}
+                    {user.firstName} {user.lastName}
                   </div>
                 </div>
               ))}
@@ -90,8 +90,8 @@ export default function ChooseReciever({
             <div className="mt-5">😢 Sorry, No matching results</div>
           ) : (
             <div className="mt-5 d-flex flex-column">
-              {searchResults.map((parent, index) => (
-                <div className="d-flex mt-3" key={parent.id}>
+              {searchResults.map((user, index) => (
+                <div className="d-flex mt-3" key={user.id}>
                   <img
                     src="/images/user.jpg"
                     alt="user"
@@ -101,9 +101,9 @@ export default function ChooseReciever({
                   />
                   <div
                     className="name mt-1 ml-3"
-                    onClick={() => addReciever(index, parent.id)}
+                    onClick={() => addReciever(index, user.id)}
                   >
-                    {parent.firstName} {parent.lastName}
+                    {user.firstName} {user.lastName}
                   </div>
                 </div>
               ))}
