@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import chatService from "../../services/messaging/chat.service";
 import parentService from "../../services/users/parent-service";
 import ChooseReciever from "./ChooseReciever";
-import Data from "./data.json";
+import Message from "./Message";
 import TypingArea from "./TypingArea";
 
 export default function Chat() {
@@ -62,6 +62,11 @@ export default function Chat() {
       if (currentChatId === "") {
         setCurrentChatId(newChatsUnique[0].receiver.id);
         setCurrentChat(newChatsUnique[0]);
+      } else {
+        let newindex = newChatsUnique.findIndex(
+          (x) => x.receiver.id === currentChatId
+        );
+        if (newindex > -1) setCurrentChat(newChatsUnique[newindex]);
       }
     }
   };
@@ -97,10 +102,6 @@ export default function Chat() {
       messageDirection: authUser.category === "PARENT" ? "REVERSE" : "FORWARD",
       messageStatus: currentChatId === "all" ? "ALL" : "PARTICULAR",
     };
-
-    // if (newMessageStatus === "PARTICULAR" && currentChatId !== "all") {
-    //   newMessage.user_receiverId = currentChatId;
-    // }
 
     if (receiverId !== "all") newMessage.user_receiverId = receiverId;
 
@@ -180,11 +181,9 @@ export default function Chat() {
   };
 
   useEffect(() => {
-    // makeChats();
     if (getChats) {
       retriveChats();
     }
-
     getParents();
   }, []);
 
@@ -252,18 +251,8 @@ export default function Chat() {
                     <div className="media-body ml-4">
                       <div className="d-flex align-items-center justify-content-between mb-1">
                         <h6 className="mb-0 user-name">All Parents</h6>
-                        {/* {chat.messages.length !== 0 && (
-                                <small className="small font-weight-bold">
-                                  {chat.messages[0].lastModifiedAt[2]}{" "}
-                                  {chat.messages[0].lastModifiedAt[1]}
-                                </small>
-                              )} */}
                         To all
                       </div>
-                      <p className="font-sm mb-0 text-small">
-                        {/* {chat.messages.length !== 0 &&
-                          chat.messages[chat.messages.length - 1].message} */}
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -337,46 +326,7 @@ export default function Chat() {
               ) : chats.length !== 0 && currentChat ? (
                 currentChat.messages.length !== 0 ? (
                   currentChat.messages.map((msg, index) => (
-                    <div
-                      className={`media w-50 mb-3 ${
-                        msg.messageDirection === "FORWARD" && "ml-auto"
-                      }`}
-                      key={index}
-                    >
-                      {msg.messageDirection === "REVERSE" ? (
-                        <img
-                          src="/images/user.jpg"
-                          alt="user"
-                          width="50"
-                          height="50"
-                          className="rounded-circle"
-                        />
-                      ) : null}
-                      <div className="media-body ml-3">
-                        <div
-                          className={`rounded py-2 px-3 mb-2 ${
-                            msg.messageDirection === "FORWARD"
-                              ? "bg-blue"
-                              : "bg-light"
-                          } `}
-                        >
-                          <p
-                            className={`text-small mb-0 ${
-                              msg.messageDirection === "FORWARD"
-                                ? "text-white"
-                                : "text-muted"
-                            }`}
-                          >
-                            {msg.message}
-                          </p>
-                        </div>
-                        <p className="small text-muted">
-                          {msg.lastModifiedAt[4].split(":")[0]}:
-                          {msg.lastModifiedAt[4].split(":")[1]} |{" "}
-                          {msg.lastModifiedAt[1]} {msg.lastModifiedAt[2]}
-                        </p>
-                      </div>
-                    </div>
+                    <Message msg={msg} index={index} />
                   ))
                 ) : (
                   <div style={{ height: "100vh" }}>
@@ -404,8 +354,8 @@ export default function Chat() {
             removeReceiver={removeReceiver}
             searchParent={searchParent}
             searchResults={searchResults}
-            setCompose={setCompose}
             setShowMsg={setShowMsg}
+            composeMessage={composeMessage}
           />
         )}
       </div>

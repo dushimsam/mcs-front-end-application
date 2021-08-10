@@ -8,7 +8,6 @@ export default function ChooseReciever({
   removeReceiver,
   searchParent,
   searchResults,
-  setCompose,
   setShowMsg,
   composeMessage,
 }) {
@@ -23,7 +22,12 @@ export default function ChooseReciever({
     }
   };
 
-  const sendMessageToMany = () => {};
+  const sendMessageToMany = (e) => {
+    e.preventDefault();
+    for (let i = 0; i < receivers.length; i++) {
+      composeMessage(e, message, receivers[i].id);
+    }
+  };
 
   useEffect(() => {
     searchParent(search);

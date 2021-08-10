@@ -1,7 +1,8 @@
 .type-message {
-  bottom: 0;
+  bottom: 1%;
   width: 67%;
   right: 18px;
+  height: 10%;
 }
 
 .new-message-btn {
