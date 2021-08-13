@@ -13,7 +13,7 @@ class EmployeesService {
     }
 
     getByUserId(id){
-        return http.get(`/employees/user/${id}`)
+        return http.get(`/school-employees/user/${id}`)
     }
 
     getAllActive(){

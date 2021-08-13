@@ -1,13 +1,18 @@
 import Link from "next/link";
-export default function Event() {
+export default function Event({ event }) {
+  const createMarkup = (html) => {
+    return {
+      __html: DOMPurify.sanitize(html)
+    }
+  }
   return (
-    <Link href="/event">
+    <Link href={"/event/" + event?.id} passHref>
       <div
         className="card shadow-sm event mr-md-5 mt-4"
         style={{ width: "15rem" }}
       >
         <img
-          src="/images/school-img.png"
+          src={event?.mainPicPath}
           className="card-img-top"
           alt="Event picture"
         />
@@ -19,11 +24,10 @@ export default function Event() {
               fontWeight: "700",
             }}
           >
-            The 2021 Graduation
+            {event?.title}
           </h5>
           <p className="card-text pt-1 px-3 pb-3" style={{ fontSize: "14px" }}>
-            Some quick example text to bui on the card title and make up the
-            bulk of the card's content.
+            {event?.title + " " + event?.title}
           </p>
         </div>
       </div>

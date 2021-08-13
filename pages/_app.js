@@ -3,6 +3,7 @@ import "../styles/globals.css";
 import "../styles/faq.css";
 import "../styles/footer.css";
 
+import Snack from "../components/snackbar"
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import '../styles/globals.css'
@@ -120,6 +121,7 @@ function MyApp({ Component, pageProps }) {
             crossorigin="anonymous"
           />
         </Head>
+        <Snack/>
         <AppMeta />
         <Component {...pageProps} />
       </div>
