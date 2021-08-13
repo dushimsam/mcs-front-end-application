@@ -1,6 +1,6 @@
 import axios from "axios";
-// export const domain = "https://mcs-backend-system.herokuapp.com";
-export const domain = "http://localhost:4600";
+export const domain = "https://mcs-backend-system.herokuapp.com";
+// export const domain = "http://localhost:4600";
 
 
 
