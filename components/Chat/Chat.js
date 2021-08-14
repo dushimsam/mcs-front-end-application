@@ -26,7 +26,6 @@ export default function Chat() {
 
   const [showMsg, setShowMsg] = useState(true);
   const [showOptions, setShowOptions] = useState(true);
-  const [offset, setOffset] = useState(0);
 
   const messagesEndRef = useRef(null);
   const boxRef = useRef(null);
