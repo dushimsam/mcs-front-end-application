@@ -7,10 +7,10 @@ export default function ChatSidebar({
   toOneOrMany,
   setCurrentChatId,
   currentChatId,
-  messages,
-  chats,
   type,
   setShowMsg,
+  users,
+  messages,
 }) {
   return (
     <div className="col-4 px-0 position-relative">
@@ -57,19 +57,19 @@ export default function ChatSidebar({
                   currentChatId === "all" ? "active" : null
                 }`}
                 key="all"
-                onClick={() => setCurrentChatId("all")}
+                onClick={() => (setCurrentChatId("all"), setShowMsg(true))}
               >
                 <div className="media">
                   <img
-                    src="/images/user.jpg"
+                    src="https://lh3.googleusercontent.com/proxy/bsjsUs6UVEXR7pDzXkKPmQq9yal2n8-gfXLJ9C2IqzRIVfKHloqoYIt9buxLowdcOqnWDkKR54JCJplZC2XBgpDv1ar2enlk4Jdy6W_9OHA"
                     alt="user"
-                    width="50"
-                    height="50"
+                    width="40"
+                    height="40"
                     className="rounded-circle"
                   />
-                  <div className="media-body ml-4">
+                  <div className="media-body ml-3">
                     <div className="d-flex align-items-center justify-content-between mb-1">
-                      <h6 className="mb-0 user-name">All Parents</h6>
+                      <h6 className="mt-2 user-name">All Parents</h6>
                       To all
                     </div>
                   </div>
@@ -77,47 +77,52 @@ export default function ChatSidebar({
               </div>
             )}
             {/* ALL part end */}
-            {messages.length !== 0 ? (
-              chats.map((chat) => (
+            {users.length !== 0 ? (
+              users.map((user) => (
                 <div
                   className={`list-group-item list-group-item-action list-group-item-light rounded-0 ${
-                    currentChatId === chat.receiver.id ? "active" : null
+                    currentChatId === user.user.id ? "active" : null
                   }`}
-                  key={chat.receiver.id}
-                  onClick={() => setCurrentChatId(chat.receiver.id)}
+                  key={user.user.id}
+                  onClick={() => (
+                    setCurrentChatId(user.user.id), setShowMsg(true)
+                  )}
                 >
                   <div className="media">
                     <img
-                      src="/images/user.jpg"
+                      src={
+                        user.user.profile === "htttp:..."
+                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                          : user.user.profile
+                      }
                       alt="user"
-                      width="50"
-                      height="50"
+                      width="40"
+                      height="40"
                       className="rounded-circle"
                     />
-                    <div className="media-body ml-4">
+                    <div className="media-body ml-3">
                       <div className="d-flex align-items-center justify-content-between mb-1">
-                        <h6 className="mb-0 user-name">
-                          {chat.receiver.firstName} {chat.receiver.lastName}
+                        <h6 className="mt-2 user-name">
+                          {user.user.firstName} {user.user.lastName}
                         </h6>
-                        {chat.messages.length !== 0 && (
+                        {/* {users.length > 0 && messages.length > 0 && (
                           <small className="small font-weight-bold">
-                            {chat.messages[0].lastModifiedAt[2]}{" "}
-                            {chat.messages[0].lastModifiedAt[1]}
+                            {messages[user.pos[0]].message.lastModifiedAt[2]}{" "}
+                            {messages[user.pos[0]].message.lastModifiedAt[1]}
                           </small>
-                        )}
+                        )} */}
                       </div>
                       <p className="font-sm mb-0 text-small">
-                        {chat.messages.length !== 0 &&
-                          chat.messages[chat.messages.length - 1].message}
+                        {/* {users.length > 0 &&
+                          messages.length > 0 &&
+                          messages[user.pos[0]].message.message} */}
                       </p>
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <div className="text-center mt-4">
-                All the receivers will appear here
-              </div>
+              <div>Start sending direct messages</div>
             )}
           </div>
         </div>

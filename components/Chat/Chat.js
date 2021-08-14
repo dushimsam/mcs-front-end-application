@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import chatService from "../../services/messaging/chat.service";
 import parentService from "../../services/users/parent-service";
@@ -12,64 +12,27 @@ export default function Chat() {
   const authUser = useSelector((state) => state.authUser);
   const [messages, setMessages] = useState([]);
   const [toAllMessages, setToAllMessages] = useState([]);
-  const [chats, setChats] = useState([]);
+  const [page, setPage] = useState(0);
   const [getChats, setGetChats] = useState(true);
   const [currentChatId, setCurrentChatId] = useState("");
   const [currentChat, setCurrentChat] = useState(undefined);
 
   const [message, setMessage] = useState("");
   const [receivers, setReceivers] = useState([]);
-  // const [parent, setParent]
-  // const [employees, setEmployees] = useState([]);
   const [receivingUsers, setReceivingUsers] = useState([]);
+  const [users, setUsers] = useState([]);
 
   const [searchResults, setSearchResults] = useState(null);
 
   const [showMsg, setShowMsg] = useState(true);
   const [showOptions, setShowOptions] = useState(true);
+  const [offset, setOffset] = useState(0);
 
-  const makeChats = () => {
-    let messageCopy = [...messages];
+  const messagesEndRef = useRef(null);
+  const boxRef = useRef(null);
 
-    //get receivers
-    let newChats = messageCopy.map((msg) => {
-      return {
-        receiver: { ...msg.receiver },
-        messages: [],
-      };
-    });
-
-    let newChatsUnique = newChats.filter((c, index) => {
-      return (
-        newChats.findIndex((x) => x.receiver.id === c.receiver.id) === index
-      );
-    });
-
-    //get messages for each receiver
-    messageCopy.map((msg) => {
-      let index = newChatsUnique.findIndex(
-        (x) => x.receiver.id === msg.receiver.id
-      );
-      newChatsUnique[index].messages.push({
-        ...msg.message,
-        lastModifiedAt: new Date(msg.message.lastModifiedAt)
-          .toString()
-          .split(" "),
-      });
-    });
-
-    if (newChatsUnique.length > 0) {
-      setChats(newChatsUnique);
-      if (currentChatId === "") {
-        setCurrentChatId(newChatsUnique[0].receiver.id);
-        setCurrentChat(newChatsUnique[0]);
-      } else {
-        let newindex = newChatsUnique.findIndex(
-          (x) => x.receiver.id === currentChatId
-        );
-        if (newindex > -1) setCurrentChat(newChatsUnique[newindex]);
-      }
-    }
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const toOneOrMany = () => {
@@ -80,14 +43,6 @@ export default function Chat() {
     setCurrentChatId("all");
     setShowMsg(true);
     setShowOptions(true);
-  };
-
-  const filterMessages = () => {
-    if (currentChatId !== "all") {
-      let temp = [...chats];
-      temp = temp.filter((c) => c.receiver.id === currentChatId);
-      setCurrentChat(temp[0]);
-    }
   };
 
   const composeMessage = async (e, msg, receiverId) => {
@@ -108,12 +63,42 @@ export default function Chat() {
         if (currentChatId === "all")
           setToAllMessages(toAllMessages.concat(res.data));
         else {
+          let temp = [...messages];
           await chatService
             .getParentMessageReceiver(res.data.id)
-            .then((result) => {
-              setMessages(messages.concat(result.data));
-            })
-            .catch((err) => console.log(err));
+            .then((response) => {
+              console.log(response.data[0]);
+              temp.push({
+                ...response.data[0],
+                message: {
+                  ...response.data[0].message,
+                  lastModifiedAt: new Date(
+                    response.data[0].message.lastModifiedAt
+                  )
+                    .toString()
+                    .split(" "),
+                },
+              });
+
+              let i = users.findIndex((u) => u.user.id === receiverId);
+              let usersCopy = [...users];
+              usersCopy[i].pos.push(temp.length - 1);
+              setMessages(temp);
+              setUsers(usersCopy);
+
+              if (receiverId === currentChatId) {
+                setCurrentChat(
+                  currentChat.concat({
+                    ...response.data[0].message,
+                    lastModifiedAt: new Date(
+                      response.data[0].message.lastModifiedAt
+                    )
+                      .toString()
+                      .split(" "),
+                  })
+                );
+              }
+            });
         }
       })
       .catch((err) => console.log(err));
@@ -147,30 +132,6 @@ export default function Chat() {
       setSearchResults(results);
     } else setSearchResults(null);
   };
-
-  const retriveChats = async () => {
-    let result1;
-    let userChats = [];
-    let to_all = [];
-    await chatService
-      .getUserSentMessages(authUser.id)
-      .then((data) => (result1 = data.data));
-    for (let i = 0; i < result1.length; i++) {
-      if (result1[i].messageStatus === "ALL") {
-        to_all.push(result1[i]);
-      } else {
-        await chatService
-          .getParentMessageReceiver(result1[i].id)
-          .then((data) => {
-            data.data.map((d) => userChats.push(d));
-          });
-      }
-    }
-    setMessages(userChats);
-    setGetChats(false);
-    setToAllMessages(to_all);
-  };
-
   const getParents = () => {
     parentService.getAll().then((data) => {
       let all_parents = [];
@@ -191,9 +152,71 @@ export default function Chat() {
     setReceivingUsers([]);
   };
 
+  const getUserChat = async () => {
+    let results = [...messages];
+    let to_all = [...toAllMessages];
+    let to_users = [...users];
+    await chatService.getUserChat(authUser.id).then((data) => {
+      // console.log("Docs", data.data.docs);
+      data.data.map((d, index) => {
+        //check if the receiver is the current user
+        if (d.receiver.id === authUser.id) {
+          console.log("Receiver!!!!!!!");
+          //check if the sender is already added on the list
+          let i = to_users.findIndex((x) => x.user.id === d.message.sender.id);
+          //if the user is not on the list
+          if (i === -1) to_users.push({ user: d.message.sender, pos: [index] });
+          else {
+            //push other indexes
+            to_users[i].pos.push(index);
+          }
+        } else {
+          //here the current user is the sender
+          //check if the receiver already on the list
+          let i = to_users.findIndex((x) => x.user.id === d.receiver.id);
+          //if user not on the list
+          if (i === -1) to_users.push({ user: d.receiver, pos: [index] });
+          else {
+            //push other indexes
+            to_users[i].pos.push(index);
+          }
+        }
+        return d.message.messageStatus === "ALL"
+          ? to_all.push({
+              ...d.message,
+              lastModifiedAt: new Date(d.message.lastModifiedAt)
+                .toString()
+                .split(" "),
+            })
+          : results.push({
+              ...d,
+              message: {
+                ...d.message,
+                lastModifiedAt: new Date(d.message.lastModifiedAt)
+                  .toString()
+                  .split(" "),
+              },
+            });
+      });
+    });
+
+    setPage(page + 1);
+    setUsers(to_users);
+    setMessages(results);
+    setGetChats(false);
+    setToAllMessages(to_all);
+    if (currentChatId === "") setCurrentChatId(to_users[0].user.id);
+    console.log("Done!");
+  };
+
+  const handleScroll = () => {
+    const scrollTop = boxRef.current.scrollTop;
+    // if (scrollTop === 0) getUserChat();
+  };
+
   useEffect(() => {
     if (getChats && authUser.id) {
-      retriveChats();
+      getUserChat();
       if (authUser.category === "PARENT") {
         getEmployees();
       } else if (
@@ -205,12 +228,24 @@ export default function Chat() {
     }
   }, [authUser]);
 
+  const changeCurrentChat = () => {
+    if (currentChatId !== "all") {
+      let user = users.find((u) => u.user.id === currentChatId);
+      let newChat = [];
+      messages.map((msg, index) =>
+        user.pos.map((p) => (p === index ? newChat.push(msg.message) : null))
+      );
+
+      setCurrentChat(newChat);
+    }
+  };
+
   useEffect(() => {
-    filterMessages();
+    changeCurrentChat();
   }, [currentChatId]);
 
   useEffect(() => {
-    makeChats();
+    scrollToBottom();
   }, [messages]);
 
   return (
@@ -224,17 +259,19 @@ export default function Chat() {
           toOneOrMany={toOneOrMany}
           setCurrentChatId={setCurrentChatId}
           currentChatId={currentChatId}
-          messages={messages}
-          chats={chats}
           type={authUser.category}
           setShowMsg={setShowMsg}
+          users={users}
+          messages={messages}
         />
         {/* <!-- Chat Box--> */}
         {showMsg && messages.length > 0 ? (
           <div className="col-8 px-0 chat-box">
             <div
               className="pr-4 py-5 content bg-white"
-              style={{ height: "100vh" }}
+              style={{ height: "100vh", overflowY: "scroll" }}
+              onScroll={handleScroll}
+              ref={boxRef}
             >
               {currentChatId === "all" ? (
                 toAllMessages.length > 0 &&
@@ -246,13 +283,23 @@ export default function Chat() {
                           {msg.message}
                         </p>
                       </div>
+                      <p className="small text-muted">
+                        {msg.lastModifiedAt[4].split(":")[0]}:
+                        {msg.lastModifiedAt[4].split(":")[1]} |{" "}
+                        {msg.lastModifiedAt[1]} {msg.lastModifiedAt[2]}
+                      </p>
                     </div>
                   </div>
                 ))
-              ) : chats.length !== 0 && currentChat ? (
-                currentChat.messages.length !== 0 ? (
-                  currentChat.messages.map((msg, index) => (
-                    <Message msg={msg} index={index} key={index} />
+              ) : currentChat ? (
+                currentChat.length !== 0 ? (
+                  currentChat.map((msg, index) => (
+                    <Message
+                      msg={msg}
+                      index={index}
+                      userId={authUser.id}
+                      key={index}
+                    />
                   ))
                 ) : (
                   <div style={{ height: "100vh" }}>
@@ -262,6 +309,7 @@ export default function Chat() {
               ) : (
                 <div>Start chatting</div>
               )}
+              <div ref={messagesEndRef} />
             </div>
 
             {/* <!-- Typing area --> */}
