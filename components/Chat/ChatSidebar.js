@@ -122,7 +122,7 @@ export default function ChatSidebar({
                 </div>
               ))
             ) : (
-              <div>Start sending direct messages</div>
+              <div className="text-center">Start sending direct messages</div>
             )}
           </div>
         </div>
