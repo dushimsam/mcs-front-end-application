@@ -23,7 +23,8 @@ const ConfirmationModal = ({ continueAction, loading, setLoading, message, btnCo
                             }}>
                             {loading ? (
                                 <img
-                                    src={"/img/loader.gif"}
+                                    style={{ width: "2.5em", height: "2.5em" }}
+                                    src={"/app-imgs/spinner.gif"}
                                     alt={"Loading"}
                                     className={"loader"}
                                 />

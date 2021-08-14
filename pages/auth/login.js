@@ -177,7 +177,9 @@ export default function Login() {
               >
                 {loading ? (
                   <img
-                    src={"/img/loader.gif"}
+                    width={20}
+                    height={20}
+                    src={"/app-imgs/loader.gif"}
                     alt={"Loading"}
                     className={"loader"}
                   />

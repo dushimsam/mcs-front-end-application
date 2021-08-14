@@ -1,0 +1,24 @@
+.wrapperClass {
+    padding: 1rem;
+    border: 1px solid #ccc;
+  }
+
+  .eventEditorWrapperClass {
+    padding: 1rem;
+    border: 1px solid #ccc;
+  }
+  .editorClass {
+    /* background-color:lightgray; */
+    padding: 1rem;
+    border: 1px solid #ccc;
+  }
+
+.eventEditorClass {
+  /* background-color:lightgray; */
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+
+  .toolbarClass {
+    border: 1px solid #ccc;
+  }

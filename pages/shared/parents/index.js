@@ -2,8 +2,9 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import styles from "../../../styles/components/table.module.css";
 import ActionButtons from "../../../components/shared/ActionButtons";
-// import {filterData, getFormattedDate, sortData} from "../../../utils/functions";
-import ParentService from "../../../services/users/parent-service"
+import { filterData, sortData } from "../../../utils/functions";
+import ParentService from '../../../services/users/parent-service';
+
 // import { Th } from "../../../components/shared/table/TableHead";
 import Pagination from "react-js-pagination";
 import { show_modal } from "../../../utils/modal-funs";
@@ -35,7 +36,6 @@ const Table = ({ parents, setParents, paginator, setPaginator }) => {
         setItem(item);
         show_modal('#profileModalDetails')
     }
-
 
     return (
         <React.Fragment>
@@ -83,7 +83,7 @@ const Table = ({ parents, setParents, paginator, setPaginator }) => {
             <div className={"row justify-content-end mt-4 mb-4"}>
                 <Pagination activePage={paginator.page} itemsCountPerPage={paginator.perPage} totalItemsCount={paginator.total} pageRangeDisplayed={paginator.range} onChange={handlePageChange} />
             </div>
-            {item && <ModalProfileDetails item={item} category={"PARENT"} />}
+            {item && <ModalProfileDetails item={item} UserObj={item.user} category={"PARENT"} />}
 
         </React.Fragment>
     );
@@ -96,57 +96,58 @@ const ParentsTable = () => {
     const [parents, setParents] = useState([]);
     const [searchParents, setSearchparents] = useState([]);
     const [total, setTotal] = useState(0);
-    const [paginator, setPaginator] = useState({ page: 1, perPage: 5, total: 0, range: 5 });
+    const [paginator, setPaginator] = useState({ page: 0, perPage: 5, total: 0, range: 5 });
     const [isSearch, setIsSearch] = useState(false);
     const [searchKey, setSearchKey] = useState('');
 
     let all = [];
 
     const getParents = (page) => {
-        ParentService.getAll()
-            .then((res) => {
-                setTotal(res.data.length)
-                setParents(res.data)
-                setSearchparents(res.data)
-            }).catch(e => console.log(e))
-        // parentservice.getPaginated(page).then((res) => {
-        //     setParents(res.data.docs);
-        //     setSearchparents(res.data.docs);
-        //     setTotal(res.data.totalDocs);
-        //     setPaginator({...paginator, total: res.data.totalDocs, page: res.data.page});
-        // }).catch(e => console.log(e))
+        ParentService.getAllByConfirmStatusPaginated(true, page).then((res) => {
+            setParents(res.data.docs);
+            setSearchparents(res.data.docs);
+            setTotal(res.data.totalItems);
+            setPaginator({ ...paginator, total: res.data.totalItems, page: res.data.page });
+        }).catch(e => console.log(e))
     }
     const getSearchparents = (val, page) => {
-        // parentservice.searchPaginated(val, page).then((res) => {
-        //     setSearchparents(res.data.docs);
-        //     setPaginator({...paginator, total: res.data.totalDocs, page: res.data.page});
-        // }).catch(e => console.log(e))
+        ParentService.searchPaginated(val, page).then((res) => {
+            setSearchparents(res.data.docs);
+            setPaginator({ ...paginator, total: res.data.totalItems, page: res.data.page });
+        }).catch(e => console.log(e))
     }
 
     useEffect(() => {
         getParents(paginator.page);
-        // if (!isSearch)
-        //     getParents(paginator.page);
-        // else getSearchparents(searchKey, paginator.page);
+        if (!isSearch)
+            getParents(paginator.page);
+        else getSearchparents(searchKey, paginator.page);
     }, [paginator.page]);
 
     const getSearchKey = (val) => {
-        // setSearchKey(val);
-        // if (val === '' || val === ' ' || !val.replace(/\s/g, '').length) {
-        //     setSearchparents(parents);
-        //     setIsSearch(false);
-        // } else {
-        //     getSearchparents(val, paginator.page);
-        //     setIsSearch(true);
-        // }
+        setSearchKey(val);
+        if (val === '' || val === ' ' || !val.replace(/\s/g, '').length) {
+            setSearchparents(parents);
+            setIsSearch(false);
+        } else {
+            getSearchparents(val, paginator.page);
+            setIsSearch(true);
+        }
     };
 
     const getFilterKey = (key) => {
-        // setSearchparents(filterData(parents, 'status', key));
+        setSearchparents(filterData(parents, 'user.isLocked', key));
     }
     const getInitialData = () => {
-        // getParents(paginator.page);
+        getParents(paginator.page);
     }
+
+
+    const filters = [
+        { name: 'ALL', val: 'ALL', title: "" },
+        { name: 'ACTIVE', val: false, title: "Parents who are currently using the app" },
+        { name: 'INACTIVE', val: true, title: "Parents who can not use the application" }
+    ];
 
     const user = useSelector(state => state.authUser);
 
@@ -163,6 +164,7 @@ const ParentsTable = () => {
                 setFilter={getFilterKey}
                 name={"parents"}
                 status="new"
+                filters={filters}
                 hideAction={true}
             /> :
             <SingleSubModuleLayoutEmployee
@@ -174,6 +176,7 @@ const ParentsTable = () => {
                 setSearch={getSearchKey}
                 setFilter={getFilterKey}
                 name={"parents"}
+                filters={filters}
                 status="new"
                 hideAction={true}
             />

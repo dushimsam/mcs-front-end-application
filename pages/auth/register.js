@@ -94,14 +94,15 @@ export default function Register() {
             const parent_res = await ParentService.create(new_par_form);
 
             let new_std_form = Object.assign(student_form);
-            new_std_form.firstName = new_std_form.stdFirstName;
-            new_std_form.lastName = new_std_form.stdLastName;
+            new_std_form.studentNames = new_std_form.stdFirstName+" "+new_std_form.stdLastName;
+            new_std_form.gender="N/A"
+
             delete new_std_form.stdFirstName;
             delete new_std_form.stdLastName;
 
             new_std_form.parentId = parent_res.id;
 
-            const student_res = await StudentService.create(new_std_form)
+            await StudentService.create(new_std_form)
 
             setAlertData({ alert: true, message: 'Account Created Successfully', class: 'alert-success' });
             setTimeout(() => {

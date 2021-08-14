@@ -44,30 +44,36 @@ export default function AdminNavbar({
       </div>
       <div className="d-flex align-items-center">
         <div
-          className="notifications cursor-pointer"
+          className="notifications cursor-pointer dropdown"
           style={{ cursor: "pointer" }}
           onClick={() => setShowNotifications(!showNotifications)}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill={"none"}
-            stroke="#707070"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            className="feather feather-bell"
+          <div
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
           >
-            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-          </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill={"none"}
+              stroke="#707070"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              className="feather feather-bell"
+            >
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </div>
         </div>
         <div className="dropdown">
           <div
             className="account d-flex pl-4 align-items-center cursor-pointer"
-            style={{ fontSize: "14px", color: "#707070" }}
+            style={{ fontSize: "14px", color: "#707070", cursor: "pointer" }}
             id="dropdownMenuButton"
             data-toggle="dropdown"
             aria-haspopup="true"
@@ -102,7 +108,10 @@ export default function AdminNavbar({
               </svg>
             </span>
           </div>
-          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div
+            className="dropdown-menu dropdown-menu-right cursor-pointer"
+            aria-labelledby="dropdownMenuButton"
+          >
             <Link
               href={getDashboardLink(authUser) + "/account/settings"}
               passHref

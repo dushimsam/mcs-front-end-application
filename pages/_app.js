@@ -4,7 +4,13 @@ import "../styles/faq.css";
 import "../styles/footer.css";
 import "../styles/chat.css";
 
+<<<<<<< HEAD
 import "bootstrap/dist/css/bootstrap.min.css";
+=======
+import Snack from "../components/snackbar"
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+>>>>>>> 25ce0efd37334f3d54668f632c88a934071110fe
 // import '../styles/globals.css'
 // import 'bootstrap-css-only/css/bootstrap.min.css';
 import AuthService from "../services/auth/auth.service";
@@ -114,6 +120,7 @@ function MyApp({ Component, pageProps }) {
             crossorigin="anonymous"
           />
         </Head>
+        <Snack/>
         <AppMeta />
         <Component {...pageProps} />
       </div>

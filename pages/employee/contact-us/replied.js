@@ -64,54 +64,48 @@ const Table = ({ messages, setMessages, paginator, setPaginator }) => {
 const CategoriesTable = () => {
     const [messages, setMessages] = useState([]);
     const [searchMessages, setSearchMessages] = useState([]);
-    const [paginator, setPaginator] = useState({ page: 1, perPage: 5, total: 0, range: 5 });
+    const [paginator, setPaginator] = useState({ page: 0, perPage: 5, total: 0, range: 5 });
     const [isSearch, setIsSearch] = useState(false);
     const [searchKey, setSearchKey] = useState('');
 
+    const replyStatus = true;
+
     const [totals, setTotals] = useState({ customerReviews: 0, contactUs: 0 });
 
+
     const getMessages = (page) => {
-
-        ContactUsService.getAllByRepliedStatus(true).then((res) => {
-            setMessages(res.data);
-            setSearchMessages(res.data);
+        ContactUsService.getAllByRepliedStatusPaginated(replyStatus, page).then((res) => {
+            setMessages(res.data.docs);
+            setSearchMessages(res.data.docs);
+            setPaginator({ ...paginator, total: res.data.totalItems, page: res.data.page });
         }).catch(e => console.log(e))
-
-        // ContactUsService.get_all_paginated(page).then((res) => {
-        //     setMessages(res.data.docs);
-        //     setSearchMessages(res.data.docs);
-        //     setTotals({ ...totals, categories: res.data.totalDocs });
-        //     setPaginator({ ...paginator, total: res.data.totalDocs, page: res.data.page });
-        // }).catch(e => console.log(e))
     }
 
     const getSearchMessages = (val, page) => {
-        // ContactUsService.search_paginated(val, page).then((res) => {
-        //     setSearchMessages(res.data.docs);
-        //     setPaginator({ ...paginator, total: res.data.totalDocs, page: res.data.page });
-        // }).catch(e => console.log(e))
+        ContactUsService.search_paginated(val, page).then((res) => {
+            setSearchMessages(res.data.docs);
+            setPaginator({ ...paginator, total: res.data.totalItems, page: res.data.page });
+        }).catch(e => console.log(e))
     }
 
     const getTotals = async () => {
-        const totals = { customerReviews: 0, contactUs: 0 };
+        const totals = { inbox: 0, replied: 0, unReplied: 0 };
         try {
-            totals.customerReviews = (await CustomerReviewsService.get_all_paginated()).data.totalDocs;
-            totals.contactUs = (await ContactUsService.get_all_paginated()).data.totalDocs;
-
+            totals.inbox = (await ContactUsService.getByReadStatusPaginated(false)).data.totalItems;
+            totals.replied = (await ContactUsService.getByRepliedStatusPaginated(true)).data.totalItems;
+            totals.unReplied = (await ContactUsService.getByRepliedStatusPaginated(false)).data.totalItems;
             setTotals(totals);
-
         } catch (e) {
             console.log(e)
         }
     }
 
-
     useEffect(() => {
         getMessages(paginator.page);
-        // getTotals().then();
-        // if (!isSearch)
-        //     getMessages(paginator.page);
-        // else getSearchMessages(searchKey, paginator.page);
+        getTotals().then();
+        if (!isSearch)
+            getMessages(paginator.page);
+        else getSearchMessages(searchKey, paginator.page);
     }, [paginator.page]);
 
     const getSearchKey = (val) => {
@@ -130,10 +124,11 @@ const CategoriesTable = () => {
     }
 
     const panes = [
-        { name: 'Inbox', count: totals.customerReviews, route: '/employee/contact-us' },
-        { name: 'UnReplied', count: totals.contactUs, route: '/employee/contact-us/un-replied' },
-        { name: 'Replied', count: totals.customerReviews, route: '/employee/contact-us/replied' },
+        { name: 'Inbox', count: totals.inbox, route: '/employee/contact-us' },
+        { name: 'UnReplied', count: totals.unReplied, route: '/employee/contact-us/un-replied' },
+        { name: 'Replied', count: totals.replied, route: '/employee/contact-us/replied' },
     ];
+
     const user = useSelector(state => state.authUser);
 
 
@@ -151,7 +146,7 @@ const CategoriesTable = () => {
                 }
                 isArray={true}
                 showFilter={false}
-                name={'Contact Messages'}
+                name={'Replied'}
                 setSearch={getSearchKey}
                 status="new"
                 panes={panes}
@@ -170,7 +165,7 @@ const CategoriesTable = () => {
                 panes={panes}
                 isArray={true}
                 showFilter={false}
-                name={'Contact Messages'}
+                name={'Replied'}
                 setSearch={getSearchKey}
                 status="new"
                 route={"/employee/contact-us"}
