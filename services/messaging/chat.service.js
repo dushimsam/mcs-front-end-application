@@ -20,7 +20,7 @@ class ChatService {
   }
   getPagination(userId, page) {
     return http.get(
-      `/parent-message-receivers/user/${userId}/paginated?size=20&page=${page}&sort=createdAt,asc`
+      `/parent-message-receivers/user/chat/${userId}/paginated?size=20&page=${page}&sort=createdAt,asc`
     );
   }
 }
