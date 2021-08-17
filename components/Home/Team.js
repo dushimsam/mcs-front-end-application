@@ -26,7 +26,7 @@ export default function Team() {
             </h6>
             <p className="card-text" style={{ fontSize: "15px" }}>
               Some quick example text to build on the card title and make up the
-              bulk of the card's content.
+              bulk of the card&apos;s content.
             </p>
             <div className="d-flex justify-content-center mt-4">
               <i className="fab fa-twitter mr-3"></i>
@@ -60,7 +60,7 @@ export default function Team() {
             </h6>
             <p className="card-text" style={{ fontSize: "15px" }}>
               Some quick example text to build on the card title and make up the
-              bulk of the card's content.
+              bulk of the card&apos;s content.
             </p>
             <div className="d-flex justify-content-center mt-4">
               <i className="fab fa-twitter mr-3"></i>

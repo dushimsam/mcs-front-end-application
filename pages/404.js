@@ -31,6 +31,8 @@ export default function NotFound() {
                 className="w-100 d-block"
                 src="/app-imgs/not-found.png"
                 alt="404 error"
+                width="450"
+                height="400"
               />
             </div>
           </div>

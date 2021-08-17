@@ -81,7 +81,11 @@ function MyApp({ Component, pageProps }) {
       <div>
         <Head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin="true"
+          />
           <link
             href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
             rel="stylesheet"
@@ -89,7 +93,7 @@ function MyApp({ Component, pageProps }) {
           <link
             rel="stylesheet"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-            crossorigin="anonymous"
+            crossOrigin="anonymous"
           />
 
           <link
@@ -100,10 +104,10 @@ function MyApp({ Component, pageProps }) {
           <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-            referrerpolicy="no-referrer"
+            referrerPolicy="no-referrer"
           />
 
-          <script
+          {/* <script
             src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             crossorigin="anonymous"
           />
@@ -114,7 +118,7 @@ function MyApp({ Component, pageProps }) {
           <script
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
             crossorigin="anonymous"
-          />
+          /> */}
         </Head>
         <Snack />
         <AppMeta />
