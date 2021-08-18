@@ -85,4 +85,18 @@ a {
   .hero_btn {
     width: 25%;
   }
+
+  .notifications {
+    width: 75%;
+  }
 }
+
+/* More styles */
+.more {
+  right: 2em;
+  top: 40%;
+  font-size: 12px;
+  cursor: pointer;
+  color: #363636af;
+}
+/* More styles end */

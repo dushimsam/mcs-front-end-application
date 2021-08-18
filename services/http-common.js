@@ -2,16 +2,12 @@ import axios from "axios";
 export const domain = "https://mcs-backend-system.herokuapp.com";
 // export const domain = "http://localhost:4600";
 
-
-
-export const baseUrl = `${domain}/api/v1`
+export const baseUrl = `${domain}/api/v1`;
 
 const http = axios.create({
   baseURL: baseUrl,
-  headers: { 'Content-Type': 'application/json' },
+  headers: { "Content-Type": "application/json" },
 });
-
-
 
 // http.interceptors.request.use(
 //   function (config) {

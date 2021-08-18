@@ -1,0 +1,115 @@
+.type-message {
+  bottom: 1%;
+  width: 67%;
+  right: 18px;
+  height: 10%;
+}
+
+.new-message-btn {
+  z-index: 20;
+  color: #31b0d5;
+  font-size: 35px;
+  top: 90%;
+  left: 24%;
+  cursor: pointer;
+  /* bottom:; */
+}
+
+.chat-sidebar {
+  width: 30% !important;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.bg-blue {
+  background-color: #31b0d5 !important;
+}
+
+.font-sm {
+  font-size: 14px;
+  color: rgb(66, 66, 66);
+}
+
+.user-name {
+  color: rgb(43, 43, 43) !important;
+}
+/* .chat-sidebar {
+  position: fixed;
+  width: 150px;
+  height: 100%;
+}
+*/
+/* .chat-box {
+  width: 70% !important;
+} */
+
+.chat-sidebar .active {
+  /* background-color: rgb(245, 245, 245) !important; */
+  background: #31afd5bd !important;
+  border-color: #31afd5bd !important;
+}
+
+.chat-box .fa-paper-plane {
+  color: #31b0d5;
+}
+
+.new-chat-option {
+  background: #ffff;
+  z-index: 20;
+  font-size: 14px;
+  top: 77%;
+  left: 12%;
+}
+
+.new-chat-option .chat-option {
+  cursor: pointer;
+}
+
+.add-border {
+  border-bottom: 1px solid #3030302c;
+}
+
+.choose-receiver {
+  height: 100vh;
+  width: 60%;
+}
+
+.choose-receiver .parent {
+  border-radius: 10px;
+  font-size: 14px;
+  color: #1b687e;
+  cursor: pointer;
+}
+
+.choose-receiver .name {
+  font-size: 15px;
+  color: rgb(99, 99, 99);
+  cursor: pointer;
+  /* font-w */
+}
+
+.choose-receiver i {
+  right: 0;
+  top: 0;
+  font-size: 15px;
+  color: #363636af;
+  top: 10%;
+  right: 10px;
+  cursor: pointer;
+
+  /* font-w */
+}
+
+.compose-btn {
+  background: #31b0d5 !important;
+  color: #ffff !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  position: fixed;
+  bottom: 30px;
+  right: 100px;
+}
+
+.messages-box div div {
+  cursor: pointer;
+}

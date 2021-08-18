@@ -8,18 +8,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuthUser } from "../../store/actions";
 import jwt from "jwt-decode";
 import Router, { useRouter } from "next/router";
-import globalStyles from "../../styles/global-colors.module.css"
+import globalStyles from "../../styles/global-colors.module.css";
 import { system_users } from "../../utils/constants";
 
-
 export default function Login() {
-
   const [form, setForm] = React.useState({
     login: "",
     password: "",
   });
 
-  const authUser = useSelector(state => state.authUser)
+  const authUser = useSelector((state) => state.authUser);
 
   const dispatch = useDispatch();
 
@@ -44,27 +42,24 @@ export default function Login() {
     return "/404";
   };
 
-
-
   useEffect(() => {
     if (authUser.category) {
-      Router.push(getUserHref()).then()
+      Router.push(getUserHref()).then();
     }
-  }, [authUser])
+  }, [authUser]);
 
   const login = async () => {
     setAlertData({ alert: false, message: "", class: "" });
     setLoading(true);
 
     try {
-
       const res = await AuthService.login(form);
       AuthService.setToken(res.data.token);
 
       let user = jwt(res.data.token).User;
-      user.fullNames = res.data.firstName + " " + res.data.lastName
-      user.imageUrl = "https://picsum.photos/200"
-      dispatch(setAuthUser(user))
+      user.fullNames = res.data.firstName + " " + res.data.lastName;
+      user.imageUrl = "https://picsum.photos/200";
+      dispatch(setAuthUser(user));
 
       setAlertData({
         alert: true,
@@ -75,11 +70,11 @@ export default function Login() {
       setTimeout(() => {
         setAlertData({ alert: false, message: "", class: "" });
         if (user.category == system_users.PARENT) {
-          Router.push("/parent/dashboard")
+          Router.push("/parent/dashboard");
         } else if (user.category == system_users.EMPLOYEE) {
-          Router.push("/employee/dashboard")
+          Router.push("/employee/dashboard");
         } else {
-          Router.push("/admin/dashboard")
+          Router.push("/admin/dashboard");
         }
       }, 1000);
     } catch (e) {
@@ -97,7 +92,7 @@ export default function Login() {
     setForm({ ...form, [property]: event.target.value });
   };
 
-  const router = useRouter()
+  const router = useRouter();
   return (
     <div className={styles.root}>
       <Head>
@@ -111,12 +106,7 @@ export default function Login() {
         <div className={styles.pageHeader + " my-5"}>
           <Link href="/" passHref>
             <div className="text-center mb-4 c-pointer">
-              <img
-                src={"/logo.png"}
-                alt=""
-                width={100}
-                height={100}
-              />
+              <img src={"/logo.png"} alt="" width={100} height={100} />
             </div>
           </Link>
           <h3
@@ -171,7 +161,11 @@ export default function Login() {
             <div className="col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <button
                 type={"submit"}
-                className={styles.submitBtn + " btn w-100 mt-4 text-white " + globalStyles.globalBackColor}
+                className={
+                  styles.submitBtn +
+                  " btn w-100 mt-4 text-white " +
+                  globalStyles.globalBackColor
+                }
                 disabled={Object.values(form).some((x) => x === "") || loading}
                 onClick={login}
               >
@@ -192,7 +186,7 @@ export default function Login() {
 
           <div className={"meta-info-area"}>
             <Link href={"/auth/register"}>
-              <a className={styles.metaInfoLink}>Don't have an account?</a>
+              <a className={styles.metaInfoLink}>Don&apos;t have an account?</a>
             </Link>
             <Link href={"/auth/forgot-password"}>
               <a className={styles.metaInfoLink + " float-right"}>

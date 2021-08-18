@@ -4,13 +4,13 @@ export default function FAQ() {
       <h3 className="numan text-center">Frequently Asked Questions</h3>
       <div className="mt-5">
         <div id="main">
-          <div class="container">
-            <div class="accordion" id="faq">
-              <div class="card shadow-sm">
-                <div class="card-header" id="faqhead1">
+          <div className="container">
+            <div className="accordion" id="faq">
+              <div className="card shadow-sm">
+                <div className="card-header" id="faqhead1">
                   <a
                     href="#"
-                    class="btn btn-header-link"
+                    className="btn btn-header-link"
                     data-toggle="collapse"
                     data-target="#faq1"
                     aria-expanded="true"
@@ -22,11 +22,11 @@ export default function FAQ() {
 
                 <div
                   id="faq1"
-                  class="collapse show"
+                  className="collapse show"
                   aria-labelledby="faqhead1"
                   data-parent="#faq"
                 >
-                  <div class="card-body">
+                  <div className="card-body">
                     Anim pariatur cliche reprehenderit, enim eiusmod high life
                     accusamus terry richardson ad squid. 3 wolf moon officia
                     aute, non cupidatat skateboard dolor brunch. Food truck
@@ -36,16 +36,16 @@ export default function FAQ() {
                     helvetica, craft beer labore wes anderson cred nesciunt
                     sapiente ea proident. Ad vegan excepteur butcher vice lomo.
                     Leggings occaecat craft beer farm-to-table, raw denim
-                    aesthetic synth nesciunt you probably haven't heard of them
+                    aesthetic synth nesciunt you probably heard of them
                     accusamus labore sustainable VHS.
                   </div>
                 </div>
               </div>
-              <div class="card shadow-sm">
-                <div class="card-header" id="faqhead2">
+              <div className="card shadow-sm">
+                <div className="card-header" id="faqhead2">
                   <a
                     href="#"
-                    class="btn btn-header-link collapsed"
+                    className="btn btn-header-link collapsed"
                     data-toggle="collapse"
                     data-target="#faq2"
                     aria-expanded="true"
@@ -57,11 +57,11 @@ export default function FAQ() {
 
                 <div
                   id="faq2"
-                  class="collapse"
+                  className="collapse"
                   aria-labelledby="faqhead2"
                   data-parent="#faq"
                 >
-                  <div class="card-body">
+                  <div className="card-body">
                     Anim pariatur cliche reprehenderit, enim eiusmod high life
                     accusamus terry richardson ad squid. 3 wolf moon officia
                     aute, non cupidatat skateboard dolor brunch. Food truck
@@ -71,16 +71,16 @@ export default function FAQ() {
                     helvetica, craft beer labore wes anderson cred nesciunt
                     sapiente ea proident. Ad vegan excepteur butcher vice lomo.
                     Leggings occaecat craft beer farm-to-table, raw denim
-                    aesthetic synth nesciunt you probably haven't heard of them
+                    aesthetic synth nesciunt you probably heard of them
                     accusamus labore sustainable VHS.
                   </div>
                 </div>
               </div>
-              <div class="card shadow-sm">
-                <div class="card-header" id="faqhead3">
+              <div className="card shadow-sm">
+                <div className="card-header" id="faqhead3">
                   <a
                     href="#"
-                    class="btn btn-header-link collapsed"
+                    className="btn btn-header-link collapsed"
                     data-toggle="collapse"
                     data-target="#faq3"
                     aria-expanded="true"
@@ -92,11 +92,11 @@ export default function FAQ() {
 
                 <div
                   id="faq3"
-                  class="collapse"
+                  className="collapse"
                   aria-labelledby="faqhead3"
                   data-parent="#faq"
                 >
-                  <div class="card-body">
+                  <div className="card-body">
                     Anim pariatur cliche reprehenderit, enim eiusmod high life
                     accusamus terry richardson ad squid. 3 wolf moon officia
                     aute, non cupidatat skateboard dolor brunch. Food truck
@@ -106,7 +106,7 @@ export default function FAQ() {
                     helvetica, craft beer labore wes anderson cred nesciunt
                     sapiente ea proident. Ad vegan excepteur butcher vice lomo.
                     Leggings occaecat craft beer farm-to-table, raw denim
-                    aesthetic synth nesciunt you probably haven't heard of them
+                    aesthetic synth nesciunt you probably heard of them
                     accusamus labore sustainable VHS.
                   </div>
                 </div>
