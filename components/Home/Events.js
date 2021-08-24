@@ -100,7 +100,7 @@ export default function Events() {
                             <div
                                 className="row">
                                 {events.map((event, i) => (
-                                    <Event event={event} autoResponsive={false}/>
+                                    <Event event={event} autoResponsive={false} key={i}/>
                                 ))
                                 }
                             </div>

@@ -14,9 +14,8 @@ export default function About() {
           />
         </div>
         <div className="ml-md-5 about-us-content">
-          <p>
-            Mount Carmel School' graduates are prepared for college and career to enable them to become productive citizens and successful members of the workforce.  Mount Carmel School recognizes that when families are engaged in their children's education, the students achieve higher grades, have better attendance and behavior, complete more homework and demonstrate a more positive attitude toward school. We believe that building meaningful and authentic partnerships with our families and communities is the best way to ensure our students' success in school, careers and life.
-          </p>
+            <p>
+                Mt. Carmel School offers a college-preparatory program that qualifies students to attend the college or university of their choice. Recent graduates have been accepted at numerous schools including Asbury University, Calvin College, Purdue University, the University of Michigan, the University of Kentucky, and others.  </p>
         </div>
       </div>
     </div>
