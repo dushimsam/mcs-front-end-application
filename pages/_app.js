@@ -22,9 +22,6 @@ import { updateJavaScriptObject } from "../utils/functions";
 import { useEffect } from "react";
 import { app_info } from "../utils/constants";
 
-import "react-image-gallery/styles/css/image-gallery.css";
-// import "node_modules/react-image-gallery/styles/css/image-gallery.css";
-
 NProgress.configure({ showSpinner: false });
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());

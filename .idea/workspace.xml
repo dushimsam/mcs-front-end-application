@@ -2,35 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a8f46496-f402-4841-93b3-c7819238ee75" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/shared/tables/Paginator.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/components/slideshow.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Home/About.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Home/About.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Home/Contact.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Home/Contact.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Home/Events.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Home/Events.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Home/HeroSection.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Home/HeroSection.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Home/Team.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Home/Team.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Home/Testimonials.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Home/Testimonials.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Home/WhatWeOffer.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Home/WhatWeOffer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/public/Event.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/public/Event.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/shared/tables/confirmation-modal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/tables/confirmation-modal.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/auth/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auth/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/auth/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auth/register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/chat.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/employee/contact-us/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/employee/contact-us/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/employee/contact-us/replied.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/employee/contact-us/replied.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/employee/contact-us/un-replied.txt" beforeDir="false" afterPath="$PROJECT_DIR$/components/Home/SlideShow.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/employee/registrations/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/employee/registrations/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/event/[event].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/event/[event].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/shared/parents/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/shared/parents/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/components/forms.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/components/forms.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/modal-funs.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/modal-funs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/sidebar-links.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/sidebar-links.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,7 +60,7 @@
       <workItem from="1629382122158" duration="1317000" />
       <workItem from="1629577604709" duration="2209000" />
       <workItem from="1629649253755" duration="595000" />
-      <workItem from="1629812111258" duration="9456000" />
+      <workItem from="1629812111258" duration="10883000" />
     </task>
     <servers />
   </component>
