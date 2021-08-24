@@ -133,7 +133,7 @@ const CategoriesTable = () => {
 
 
     return (
-        user.category == system_users.ADMIN ?
+        user.category === system_users.ADMIN ?
 
             <SingleSubModuleLayoutAdmin
                 Content={

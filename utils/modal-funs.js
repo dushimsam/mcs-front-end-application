@@ -2,9 +2,9 @@ import $ from "jquery";
 import {ALERT_EXPIRATION_PERIOD} from "./constants";
 
 export const show_modal = (modelId) =>{
-      $(function () {
-                    $(modelId).modal('show');
-                });
+    $(function () {
+        $(modelId).modal('show');
+    });
 }
 
 

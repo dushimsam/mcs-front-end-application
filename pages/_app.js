@@ -7,8 +7,6 @@ import "../styles/chat.css";
 import Snack from "../components/snackbar";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-// import '../styles/globals.css'
-// import 'bootstrap-css-only/css/bootstrap.min.css';
 import AuthService from "../services/auth/auth.service";
 import "../styles/loading.css";
 import UserService from "../services/users/user-service";
@@ -23,6 +21,9 @@ import { createStore } from "redux";
 import { updateJavaScriptObject } from "../utils/functions";
 import { useEffect } from "react";
 import { app_info } from "../utils/constants";
+
+import "react-image-gallery/styles/css/image-gallery.css";
+// import "node_modules/react-image-gallery/styles/css/image-gallery.css";
 
 NProgress.configure({ showSpinner: false });
 Router.events.on("routeChangeStart", () => NProgress.start());

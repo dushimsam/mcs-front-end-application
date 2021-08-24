@@ -15,16 +15,18 @@ import ModalProfileDetails from '../../../components/shared/app-user-deatils';
 import { dateFormat } from "../../../utils/functions"
 import { system_users } from '../../../utils/constants';
 import { useSelector } from 'react-redux';
+import Paginator from "../../../components/shared/tables/Paginator";
 
 
-const Table = ({ parents, setParents, paginator, setPaginator }) => {
-    console.log(parents)
+const Table = ({ parents, setParents, paginator, setPaginator ,paginatorLoading,setPaginatorLoading}) => {
     const [item, setItem] = useState(null);
     const [fields, setFields] = useState(null)
 
     const handlePageChange = (page) => {
+        setPaginatorLoading(true);
         setPaginator({ ...paginator, ['page']: page });
     };
+
 
     const [alert, setAlert] = useState({ message: "", class: "", show: false })
 
@@ -39,6 +41,7 @@ const Table = ({ parents, setParents, paginator, setPaginator }) => {
 
     return (
         <React.Fragment>
+            <div className={"table-responsive col-12"}>
             <table className={'table border rounded ' + styles.table} style={{ fontSize: '0.8em' }}>
                 <thead>
                     <tr>
@@ -79,10 +82,9 @@ const Table = ({ parents, setParents, paginator, setPaginator }) => {
                     }
                 </tbody>
             </table>
-
-            <div className={"row justify-content-end mt-4 mb-4"}>
-                <Pagination activePage={paginator.page} itemsCountPerPage={paginator.perPage} totalItemsCount={paginator.total} pageRangeDisplayed={paginator.range} onChange={handlePageChange} />
             </div>
+            <Paginator  paginator={paginator} handlePageChange={handlePageChange}
+                        paginatorLoading={paginatorLoading}/>
             {item && <ModalProfileDetails item={item} UserObj={item.user} category={"PARENT"} />}
 
         </React.Fragment>
@@ -99,6 +101,7 @@ const ParentsTable = () => {
     const [paginator, setPaginator] = useState({ page: 0, perPage: 5, total: 0, range: 5 });
     const [isSearch, setIsSearch] = useState(false);
     const [searchKey, setSearchKey] = useState('');
+    const [paginatorLoading, setPaginatorLoading] = useState(true);
 
     let all = [];
 
@@ -108,12 +111,14 @@ const ParentsTable = () => {
             setSearchparents(res.data.docs);
             setTotal(res.data.totalItems);
             setPaginator({ ...paginator, total: res.data.totalItems, page: res.data.page });
+            setPaginatorLoading(false)
         }).catch(e => console.log(e))
     }
     const getSearchparents = (val, page) => {
         ParentService.searchPaginated(val, page).then((res) => {
             setSearchparents(res.data.docs);
             setPaginator({ ...paginator, total: res.data.totalItems, page: res.data.page });
+            setPaginatorLoading(false)
         }).catch(e => console.log(e))
     }
 
@@ -153,10 +158,10 @@ const ParentsTable = () => {
 
     return (
 
-        user.category == system_users.ADMIN ?
+        user.category === system_users.ADMIN ?
             <SingleSubModuleLayoutAdmin
                 Content={<Table parents={searchParents} getInitialData={getInitialData}
-                    setParents={setSearchparents} paginator={paginator} setPaginator={setPaginator} />}
+                    setParents={setSearchparents} paginator={paginator} setPaginator={setPaginator} paginatorLoading={paginatorLoading} setPaginatorLoading={setPaginatorLoading}/>}
                 count={total}
                 route={"/shared/parents"}
                 showFilter={true}
@@ -169,7 +174,7 @@ const ParentsTable = () => {
             /> :
             <SingleSubModuleLayoutEmployee
                 Content={<Table parents={searchParents} getInitialData={getInitialData}
-                    setParents={setSearchparents} paginator={paginator} setPaginator={setPaginator} />}
+                    setParents={setSearchparents} paginator={paginator} setPaginator={setPaginator} paginatorLoading={paginatorLoading} setPaginatorLoading={setPaginatorLoading}/>}
                 count={total}
                 route={"/shared/parents"}
                 showFilter={true}

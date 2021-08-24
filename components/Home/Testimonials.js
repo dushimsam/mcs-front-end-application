@@ -2,8 +2,8 @@ import { StarFilled, StarOutlined } from "@ant-design/icons";
 
 export default function Testimonials() {
   return (
-    <div className="mt-5 container pt-5 pb-5">
-      <h3 className="numan text-center">Testimonials</h3>
+    <div className="mt-1 container pt-5 pb-5">
+      <h3 className="numan text-center font-weight-bold">Testimonials</h3>
       <div className="mt-5 d-flex flex-wrap">
         <div className="container-fluid shadow px-4 py-4 testimonial-card mt-4">
           <div className="row">

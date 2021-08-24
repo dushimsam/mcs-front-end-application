@@ -2,9 +2,6 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import styles from "../../../styles/components/table.module.css";
 import ActionButtons from "../../../components/shared/ActionButtons";
-// import {filterData, getFormattedDate, sortData} from "../../../utils/functions";
-import ParentService from "../../../services/users/parent-service"
-// import { Th } from "../../../components/shared/table/TableHead";
 import { filterData, sortData } from "../../../utils/functions";
 import Pagination from "react-js-pagination";
 import { show_modal } from "../../../utils/modal-funs";
@@ -17,8 +14,8 @@ import { ALERT_EXPIRATION_PERIOD, system_users } from '../../../utils/constants'
 import { useSelector } from 'react-redux';
 import parentService from '../../../services/users/parent-service';
 import userService from '../../../services/users/user-service';
-import { alertSuccess, alertFailer } from '../../../utils/alerts';
-
+import {alertSuccess, alertFailer, notifySuccess} from '../../../utils/alerts';
+import $ from "jquery"
 
 const Table = ({ parents, setParents, paginator, setPaginator, refreshData }) => {
     console.log(parents)
@@ -49,7 +46,7 @@ const Table = ({ parents, setParents, paginator, setPaginator, refreshData }) =>
         if (confirm_parent.status) {
             userService.toggleConfirm(confirm_parent.item.user.id)
                 .then(user => {
-                    alertSuccess("A new Parent is added in the system")
+                    notifySuccess("A new Parent is added in the system Successfully")
                     window.setTimeout(function () {
                         refreshData();
                     }, ALERT_EXPIRATION_PERIOD);
@@ -118,7 +115,7 @@ const Table = ({ parents, setParents, paginator, setPaginator, refreshData }) =>
                 <Pagination activePage={paginator.page} itemsCountPerPage={paginator.perPage} totalItemsCount={paginator.total} pageRangeDisplayed={paginator.range} onChange={handlePageChange} />
             </div>
             {item && <ModalProfileDetails item={item} category={"PARENT"} />}
-            <ConfirmationModal continueAction={handleConfirmation} loading={loading} setLoading={setLoading}
+            <ConfirmationModal continueAction={handleConfirmation} loading={loading} setLoading={setLoading} alert={!confirm_parent.status ? "THIS ACTION CAN NOT BE UNDONE": null}
                 message={confirm_parent.status ? "Are You sure the parent belongs to the school ?" : "All data will be forgotten"} btnColor={confirm_parent.status ? "btn-success" : "btn-danger"} />
 
         </React.Fragment>
@@ -185,7 +182,7 @@ const ParentsTable = () => {
 
     return (
 
-        user.category == system_users.ADMIN ?
+        user.category === system_users.ADMIN ?
             <SingleSubModuleLayoutAdmin
                 Content={<Table parents={searchParents} refreshData={refreshData}
                     setParents={setSearchparents} paginator={paginator} setPaginator={setPaginator} />}
